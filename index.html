@@ -175,6 +175,10 @@
   .tag-row{display:flex; flex-wrap:wrap; gap:8px;}
   .tag{background:var(--surface); border:1px solid var(--border); color:var(--navy); font-size:12.5px; font-weight:600; padding:6px 12px; border-radius:6px; transition:transform .2s ease, background .2s ease, color .2s ease;}
   .tag:hover{background:var(--navy); color:#fff; transform:translateY(-2px);}
+  .lang-row{display:flex; flex-wrap:wrap; gap:10px;}
+  .lang-pill{display:flex; align-items:center; gap:8px; background:var(--surface); border:1px solid var(--border); padding:7px 8px 7px 14px; border-radius:20px;}
+  .lang-pill .lang-name{font-size:13px; font-weight:700; color:var(--navy);}
+  .lang-pill .lang-level{font-size:11px; font-weight:700; color:#fff; background:var(--gold); padding:3px 9px; border-radius:10px;}
 
   /* CONTACT (dark closing slide) */
   #slide-contact{background:linear-gradient(160deg, var(--navy), var(--navy-3)); overflow:hidden;}
@@ -314,11 +318,11 @@
   <section class="slide" id="slide-about">
     <div class="slide-inner">
       <p class="eyebrow reveal">À propos</p>
-      <h2 class="section-title reveal">Un même fil, depuis le début</h2>
-      <p class="reveal">Diplômée du Master 2 Digitalisation des Parcours Clients à l'EM Strasbourg, j'ai construit mon parcours professionnel autour d'une seule idée : comprendre un parcours client, le piloter avec de la donnée, et accompagner le changement qu'il implique en interne.</p>
-      <p class="reveal">Une alternance chez Lemonway (fintech) m'a permis de maîtriser l'ensemble du funnel d'acquisition B2B — de la campagne à la conversion. Aujourd'hui, je recherche un premier poste qui prolonge cette trajectoire, à la croisée du marketing et de l'IT.</p>
-      <p class="reveal">Je m'intéresse aussi de plus en plus à l'IA générative et aux agents, que j'explore activement pour monter en compétence et gagner en performance dans mes futures missions.</p>
-      <svg class="tree reveal" viewBox="0 0 640 400" role="img" aria-label="Mon parcours, comme un arbre : racines EM Strasbourg et American Cola, tronc marketing digital et parcours client, branches CFPE France Parrainages et Lemonway, et un bourgeon IA & agents vers un premier poste en 2026">
+      <h2 class="section-title reveal">Comprendre un parcours, avant de le transformer</h2>
+      <p class="reveal">Tout est parti d'une question que je me pose encore à chaque projet : pourquoi ce client abandonne-t-il ici, précisément ? Cette curiosité m'a menée du terrain chez American Cola à Douala jusqu'aux amphithéâtres de l'EM Strasbourg, où j'ai enchaîné un Master 1 Marketing & Relation Clients puis un Master 2 Digitalisation des Parcours Clients — deux années à disséquer, chiffre après chiffre, ce qui fait qu'un parcours convertit ou échoue.</p>
+      <p class="reveal">Chez Lemonway, cette conviction est devenue un métier : piloter un funnel B2B de bout en bout, de la campagne à la conversion, avec la donnée comme boussole. Aujourd'hui, je cherche un premier poste qui prolonge cette trajectoire, à la croisée du marketing et de l'IT.</p>
+      <p class="reveal">Et parce que ce métier change vite, j'apprends aussi vite : je m'immerge dans l'IA générative et les agents pour rester à la pointe et démultiplier mon impact dès mes premières missions.</p>
+      <svg class="tree reveal" viewBox="0 0 640 400" role="img" aria-label="Mon parcours, comme un arbre : racines EM Strasbourg (M1 et M2) et American Cola, tronc marketing digital et parcours client, branches CFPE France Parrainages et Lemonway, et un bourgeon IA & agents vers un premier poste en 2026">
         <path class="tree-path root" d="M320,370 Q250,365 180,358"/>
         <path class="tree-path root" d="M320,370 Q390,365 460,358"/>
         <path class="tree-path trunk" d="M320,370 L320,235"/>
@@ -333,7 +337,7 @@
         <circle class="tree-node branch-node" cx="490" cy="138" r="6"/>
         <circle class="tree-node apex-node" cx="320" cy="62" r="7"/>
 
-        <text class="tree-label" x="180" y="382" text-anchor="middle">EM Strasbourg — M2</text>
+        <text class="tree-label" x="180" y="382" text-anchor="middle">EM Strasbourg — M1 & M2</text>
         <text class="tree-label" x="460" y="382" text-anchor="middle">American Cola · 2022</text>
         <text class="tree-label" x="150" y="122" text-anchor="middle">CFPE France Parrainages · 2023</text>
         <text class="tree-label" x="490" y="122" text-anchor="middle">Lemonway · 2024–2025</text>
@@ -382,10 +386,13 @@
         <div class="stat-box"><span class="num" data-count="8000">0</span><span class="label">contacts qualifiés Salesforce</span></div>
       </div>
       <ul class="reveal">
+        <li>Animé la stratégie de contenu B2B bilingue FR/EN — 10 articles de blog, 10+ posts LinkedIn et 20+ contenus web ciblant les prospects</li>
         <li>Piloté 6 campagnes digitales B2B (Google Ads, LinkedIn Ads, emailing) — 90 leads qualifiés (MQL) générés par mois en moyenne</li>
         <li>Automatisé 4 scénarios de nurturing sous Pardot — gain de 40% sur le traitement manuel, conformité RGPD</li>
         <li>Qualifié 8 000 contacts dans Salesforce CRM — réduction de 30% des leads non exploitables sur 3 mois</li>
+        <li>Augmenté le taux d'ouverture emailing de 20% via A/B testing et lead scoring comportemental</li>
         <li>Construit 2 dashboards de suivi acquisition (trafic, conversion, ROI) et coordonné des webinars externes</li>
+        <li>Créé la newsletter prospects pour les marketplaces B2B/B2C et la plateforme de crowdfunding</li>
       </ul>
       <div class="job-stack reveal">Google Ads · LinkedIn Ads · Salesforce CRM · Pardot · GA4 · Looker Studio · WordPress · Jira</div>
     </div>
@@ -448,7 +455,7 @@
           <span class="projet-tag">Audit SEO · 2025</span>
           <span class="brand-wordmark">MUSTELA</span>
           <h3>Audit SEO complet — Mustela</h3>
-          <p>56 pages d'audit sur mustela.fr : j'ai passé le site Shopify au crible — technique, sémantique, netlinking, EEAT — et livré des recommandations concrètes pour regagner en visibilité sur Google.</p>
+          <p>56 pages d'audit sur mustela.fr : j'ai passé le site Shopify au crible — technique, sémantique, netlinking, EEAT — et livré des recommandations concrètes pour regagner en visibilité sur Google. Un audit du même type a aussi été mené pour Club Med.</p>
           <button type="button" class="btn btn-outline btn-sm" data-doc="Audit_SEO_Mustela.pdf" data-doc-name="Audit SEO — Mustela">Télécharger l'audit</button>
         </div>
         <div class="projet-card">
@@ -484,13 +491,13 @@
         <div class="skill-group">
           <h4>Acquisition & paid</h4>
           <div class="tag-row">
-            <span class="tag">Google Ads</span><span class="tag">LinkedIn Ads</span><span class="tag">SEO/SEA</span><span class="tag">A/B Testing</span>
+            <span class="tag">Google Ads</span><span class="tag">LinkedIn Ads</span><span class="tag">SEO/SEA</span><span class="tag">A/B Testing</span><span class="tag">Lead Generation</span>
           </div>
         </div>
         <div class="skill-group">
           <h4>CRM & automation</h4>
           <div class="tag-row">
-            <span class="tag">Salesforce</span><span class="tag">Pardot</span><span class="tag">HubSpot</span><span class="tag">Mailchimp</span><span class="tag">Webmecanik</span>
+            <span class="tag">Salesforce</span><span class="tag">Pardot</span><span class="tag">HubSpot</span><span class="tag">Mailchimp</span><span class="tag">Webmecanik</span><span class="tag">Lead Nurturing</span><span class="tag">RGPD</span>
           </div>
         </div>
         <div class="skill-group">
@@ -502,7 +509,13 @@
         <div class="skill-group">
           <h4>Content & SEO</h4>
           <div class="tag-row">
-            <span class="tag">WordPress</span><span class="tag">Strapi</span><span class="tag">Canva</span><span class="tag">SEMrush</span><span class="tag">Screaming Frog</span><span class="tag">Haloscan</span>
+            <span class="tag">WordPress</span><span class="tag">Strapi</span><span class="tag">Canva</span><span class="tag">Content Marketing B2B</span><span class="tag">Copywriting FR/EN</span><span class="tag">SEMrush</span><span class="tag">Ahrefs</span><span class="tag">Screaming Frog</span><span class="tag">Search Console</span><span class="tag">Haloscan</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h4>Outils & productivité</h4>
+          <div class="tag-row">
+            <span class="tag">Jira</span><span class="tag">Notion</span><span class="tag">Google Workspace</span><span class="tag">Microsoft 365</span>
           </div>
         </div>
         <div class="skill-group">
@@ -510,6 +523,20 @@
           <span class="badge-progress">En apprentissage</span>
           <div class="tag-row">
             <span class="tag">IA générative</span><span class="tag">Prompt design</span><span class="tag">Agents IA (Claude, ChatGPT)</span><span class="tag">ChatLLM</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h4>Langues</h4>
+          <div class="lang-row">
+            <div class="lang-pill"><span class="lang-name">Français</span><span class="lang-level">C2</span></div>
+            <div class="lang-pill"><span class="lang-name">Anglais</span><span class="lang-level">C2</span></div>
+            <div class="lang-pill"><span class="lang-name">Espagnol</span><span class="lang-level">A2</span></div>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h4>Qualités humaines</h4>
+          <div class="tag-row">
+            <span class="tag">Organisation</span><span class="tag">Rigueur</span><span class="tag">Autonomie</span><span class="tag">Communication</span><span class="tag">Esprit d'équipe</span><span class="tag">Curiosité</span><span class="tag">Force de proposition</span>
           </div>
         </div>
       </div>
@@ -528,8 +555,8 @@
           <span>Marketing digital · Parcours client</span>
         </div>
       </div>
-      <p class="contact-pitch reveal">Au-delà de mon CV, que vous trouverez en pièce jointe, je suis convaincue que la véritable valeur d'une collaboration se découvre à travers l'échange. Ce serait un réel plaisir de pouvoir vous rencontrer afin de vous exposer plus en détail mes motivations et d'envisager ensemble les perspectives d'une future collaboration.</p>
-      <p class="contact-pitch contact-pitch--en reveal">Beyond my CV, which you'll find attached, I believe the true value of a collaboration is best discovered through conversation. It would be a real pleasure to meet you, to share my motivations in more depth, and to explore together what a future collaboration could look like.</p>
+      <p class="contact-pitch reveal">Ce portfolio montre ce que j'ai accompli ; c'est en échangeant que je peux vous montrer ce que je peux apporter. Si mon profil retient votre attention, j'aimerais beaucoup qu'on en discute de vive voix — au-delà du CV ci-joint, pour construire ensemble les contours d'une future collaboration.</p>
+      <p class="contact-pitch contact-pitch--en reveal">This portfolio shows what I've done; a conversation would show what I can bring to your team. If my profile catches your interest, I'd love to talk it through — beyond the attached CV, to shape together what a future collaboration could look like.</p>
       <p class="contact-sub reveal">Disponible pour un premier emploi à partir de 2026 en marketing digital (profil pont marketing × IT), mobile Paris / Île-de-France et Bruxelles. Actuellement en veille active sur l'IA générative et les agents pour renforcer mon impact.</p>
       <div class="contact-links reveal">
         <a href="mailto:voufodaryne072@gmail.com">voufodaryne072@gmail.com</a>
