@@ -21,6 +21,7 @@
   body{font-family:var(--sans); background:var(--bg); color:var(--ink); line-height:1.6; -webkit-font-smoothing:antialiased; overflow:hidden;}
   a{color:inherit;}
   button{font-family:inherit;}
+  button.btn{appearance:none; -webkit-appearance:none; -moz-appearance:none; font:inherit; margin:0;}
 
   /* DECORATIVE BACKGROUND */
   .bg-decor{position:fixed; inset:0; z-index:0; overflow:hidden; pointer-events:none;}
@@ -85,12 +86,18 @@
   .slide.active .reveal:nth-child(4){transition-delay:.26s}
   .slide.active .reveal:nth-child(5){transition-delay:.33s}
   .slide.active .reveal:nth-child(6){transition-delay:.4s}
+  .slide.active .reveal:nth-child(7){transition-delay:.47s}
+  .slide.active .reveal:nth-child(8){transition-delay:.54s}
 
   .eyebrow{font-size:13px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--gold); margin-bottom:14px;}
   h2.section-title{font-family:var(--serif); font-weight:600; font-size:clamp(24px,3.4vw,30px); color:var(--navy); margin-bottom:22px;}
 
   /* HERO */
-  .hero-inner{text-align:left;}
+  .hero-inner{text-align:left; display:flex; align-items:center; gap:52px;}
+  .hero-text{flex:1 1 480px; min-width:0;}
+  .hero-photo-wrap{flex:0 0 auto; position:relative;}
+  .hero-photo-wrap::before{content:""; position:absolute; inset:-12px; border:1.5px solid var(--gold); border-radius:28px; opacity:.45; z-index:-1;}
+  .hero-photo{display:block; width:250px; height:310px; object-fit:cover; border-radius:22px; box-shadow:0 28px 50px -22px rgba(18,40,63,.4);}
   .logo-mark--hero{width:96px; height:96px; margin-bottom:22px;}
   .logo-mark--hero circle.ring{stroke-dasharray:220; stroke-dashoffset:220; animation:draw 1.3s ease forwards .3s;}
   .logo-mark--hero text{font-size:30px;}
@@ -109,9 +116,29 @@
 
   /* ABOUT */
   #slide-about p{font-size:16px; color:var(--ink); max-width:640px; margin-bottom:16px;}
-  .trajectory{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-top:26px; font-size:13.5px; color:var(--muted); font-weight:600;}
-  .trajectory .stop{background:var(--surface); border:1px solid var(--border); padding:7px 14px; border-radius:20px; color:var(--navy);}
-  .trajectory .arrow{color:var(--muted-2);}
+
+  /* ARBRE DE VIE */
+  .tree{width:100%; max-width:560px; margin:18px auto 0; display:block;}
+  .tree-path{fill:none; stroke:var(--navy-2); stroke-width:2.5; stroke-linecap:round; stroke-dasharray:520; stroke-dashoffset:520;}
+  .tree-path.root{stroke:var(--muted-2);}
+  .tree-path.apex{stroke:var(--gold); stroke-width:2; stroke-dasharray:6 6;}
+  .slide.active .tree-path.root{animation:tree-grow 1s ease forwards .15s;}
+  .slide.active .tree-path.trunk{animation:tree-grow 1s ease forwards .35s;}
+  .slide.active .tree-path.branch{animation:tree-grow 1.1s ease forwards .6s;}
+  .slide.active .tree-path.apex{animation:tree-grow 1.2s ease forwards .95s;}
+  @keyframes tree-grow{to{stroke-dashoffset:0;}}
+  .tree-node{fill:var(--muted-2);}
+  .tree-node.trunk-node{fill:var(--navy);}
+  .tree-node.branch-node{fill:var(--navy-2);}
+  .tree-node.apex-node{fill:var(--gold);}
+  .tree-label{font-family:var(--sans); font-size:12px; fill:var(--muted); font-weight:600;}
+  .tree-label--trunk{fill:var(--navy); font-size:12.5px; font-weight:700;}
+  .tree-label--gold{fill:var(--gold); font-weight:700;}
+
+  /* COMPANY LOGOS */
+  .company-logo{height:18px; width:auto; max-width:100px; object-fit:contain; vertical-align:middle; margin-right:8px;}
+  .projet-logo{height:20px; width:auto; max-width:120px; object-fit:contain; display:block; margin-bottom:10px;}
+  .brand-wordmark{display:inline-block; font-family:var(--serif); font-weight:600; font-size:15px; letter-spacing:.06em; color:var(--navy); margin-bottom:10px;}
 
   /* PILIERS */
   .piliers-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:18px;}
@@ -154,11 +181,17 @@
   .contact-watermark{position:absolute; right:2%; bottom:-6%; font-family:var(--serif); font-size:min(40vw,420px); font-weight:600; color:rgba(255,255,255,0.05); pointer-events:none; user-select:none;}
   #slide-contact .slide-inner{text-align:left;}
   #slide-contact .eyebrow{color:var(--gold);}
-  .contact-title{font-family:var(--serif); font-size:clamp(26px,4.4vw,40px); font-weight:600; margin-bottom:16px; color:#fff;}
-  .contact-sub{color:#C7D2E0; font-size:15.5px; margin-bottom:30px; max-width:520px;}
+  .contact-title{font-family:var(--serif); font-size:clamp(26px,4.4vw,40px); font-weight:600; margin-bottom:20px; color:#fff;}
+  .contact-person{display:flex; align-items:center; gap:14px; margin-bottom:24px;}
+  .contact-avatar{width:56px; height:56px; border-radius:50%; object-fit:cover; border:2px solid var(--gold); flex-shrink:0;}
+  .contact-person strong{display:block; color:#fff; font-family:var(--serif); font-size:16px; font-weight:600;}
+  .contact-person span{display:block; color:#9FB0C4; font-size:12.5px; margin-top:2px;}
+  .contact-pitch{color:#E7ECF3; font-size:15.5px; margin-bottom:14px; max-width:560px; line-height:1.6;}
+  .contact-pitch--en{color:#93A5BB; font-style:italic; font-size:13.5px; margin-bottom:24px;}
+  .contact-sub{color:#C7D2E0; font-size:14.5px; margin-bottom:30px; max-width:520px;}
   .contact-links{display:flex; gap:14px; flex-wrap:wrap; margin-bottom:40px;}
-  .contact-links a{color:#fff; font-size:14px; text-decoration:none; border:1px solid rgba(255,255,255,0.3); padding:9px 16px; border-radius:6px; font-weight:600; transition:background .2s ease;}
-  .contact-links a:hover{background:rgba(255,255,255,0.1);}
+  .contact-links a, .contact-links button{color:#fff; font-size:14px; text-decoration:none; border:1px solid rgba(255,255,255,0.3); background:transparent; padding:9px 16px; border-radius:6px; font-weight:600; cursor:pointer; transition:background .2s ease; appearance:none; -webkit-appearance:none; font-family:inherit;}
+  .contact-links a:hover, .contact-links button:hover{background:rgba(255,255,255,0.1);}
   .contact-links .btn-primary{background:var(--gold); border-color:var(--gold);}
   .contact-footer{font-size:12.5px; color:rgba(255,255,255,0.45);}
 
@@ -182,8 +215,29 @@
   .slide-counter{position:fixed; left:20px; bottom:24px; z-index:25; font-size:12.5px; font-weight:600; color:var(--muted-2); letter-spacing:.04em;}
   .slide-counter .cur{color:var(--navy); font-size:14px;}
 
+  /* LEAD CAPTURE MODAL */
+  .lead-modal{position:fixed; inset:0; z-index:60; display:flex; align-items:center; justify-content:center; opacity:0; visibility:hidden; transition:opacity .3s ease, visibility .3s ease;}
+  .lead-modal.open{opacity:1; visibility:visible;}
+  .lead-modal-backdrop{position:absolute; inset:0; background:rgba(11,27,44,0.55); backdrop-filter:blur(4px);}
+  .lead-modal-card{position:relative; background:var(--surface); border-radius:16px; padding:32px 30px; width:100%; max-width:400px; margin:20px; box-shadow:0 30px 60px -20px rgba(0,0,0,.45); transform:translateY(14px) scale(.97); transition:transform .3s ease;}
+  .lead-modal.open .lead-modal-card{transform:translateY(0) scale(1);}
+  .lead-modal-close{position:absolute; top:14px; right:14px; width:30px; height:30px; border-radius:50%; border:1px solid var(--border); background:transparent; cursor:pointer; color:var(--muted); font-size:14px;}
+  .lead-modal-close:hover{background:var(--bg);}
+  .lead-modal-title{font-family:var(--serif); font-size:20px; font-weight:600; color:var(--navy); margin-bottom:8px;}
+  .lead-modal-doc{font-size:13px; color:var(--gold); font-weight:600; margin-bottom:20px;}
+  #leadForm label{display:block; font-size:12.5px; font-weight:600; color:var(--muted); margin-bottom:14px;}
+  #leadForm input{display:block; width:100%; margin-top:6px; padding:10px 12px; border:1px solid var(--border); border-radius:8px; font-size:14px; font-family:inherit; color:var(--ink);}
+  #leadForm input:focus{outline:none; border-color:var(--navy);}
+  .lead-submit{width:100%; justify-content:center; margin-top:6px;}
+  .lead-modal-success{color:var(--gold); font-weight:600; font-size:14.5px; text-align:center; padding:18px 0;}
+  .lead-modal-privacy{font-size:11px; color:var(--muted-2); margin-top:14px; text-align:center; line-height:1.5;}
+
   @media (max-width:860px){
     .side-nav{display:none;}
+    .hero-inner{flex-direction:column;}
+    .hero-photo-wrap{order:-1; margin-bottom:6px;}
+    .hero-photo{width:170px; height:210px;}
+    .hero-photo-wrap::before{inset:-8px; border-radius:22px;}
   }
   @media (max-width:720px){
     header.topbar{padding:14px 18px;}
@@ -211,7 +265,7 @@
     <span class="logo-name">Daryne Voufo</span>
   </a>
   <div class="topbar-actions">
-    <a class="btn btn-outline btn-sm" href="CV_Daryne_Voufo.pdf" download>CV</a>
+    <button type="button" class="btn btn-outline btn-sm" data-doc="CV_Daryne_Voufo.pdf" data-doc-name="CV — Daryne Voufo">CV</button>
     <button class="menu-toggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </header>
@@ -235,18 +289,23 @@
 
   <section class="slide active" id="slide-hero">
     <div class="slide-inner hero-inner">
-      <svg class="logo-mark logo-mark--hero reveal" viewBox="0 0 44 44"><circle class="ring" cx="22" cy="22" r="19"/><text x="22" y="28" font-size="15" text-anchor="middle">DV</text></svg>
-      <p class="eyebrow reveal">Marketing digital · Parcours client · Conduite du changement</p>
-      <h1 class="hero-headline reveal">Je transforme les parcours clients à l'ère du digital.</h1>
-      <p class="hero-sub reveal">Chargée de Web Marketing formée à la digitalisation des parcours clients (EM Strasbourg), je relie l'acquisition, la donnée et la conduite du changement — au croisement du marketing et de l'IT.</p>
-      <div class="hero-actions reveal">
-        <a class="btn btn-primary" data-slide="6">Voir mes projets</a>
-        <a class="btn btn-outline" href="CV_Daryne_Voufo.pdf" download>Télécharger mon CV</a>
+      <div class="hero-text">
+        <svg class="logo-mark logo-mark--hero reveal" viewBox="0 0 44 44"><circle class="ring" cx="22" cy="22" r="19"/><text x="22" y="28" font-size="15" text-anchor="middle">DV</text></svg>
+        <p class="eyebrow reveal">Marketing digital · Parcours client · Conduite du changement</p>
+        <h1 class="hero-headline reveal">Je transforme les parcours clients à l'ère du digital.</h1>
+        <p class="hero-sub reveal">Chargée de Web Marketing formée à la digitalisation des parcours clients (EM Strasbourg), je relie l'acquisition, la donnée et la conduite du changement — au croisement du marketing et de l'IT.</p>
+        <div class="hero-actions reveal">
+          <a class="btn btn-primary" data-slide="6">Voir mes projets</a>
+          <button type="button" class="btn btn-outline" data-doc="CV_Daryne_Voufo.pdf" data-doc-name="CV — Daryne Voufo">Télécharger mon CV</button>
+        </div>
+        <div class="stat-row reveal">
+          <div class="stat-box"><span class="num" data-count="90">0</span><span class="suffix">+</span><span class="label">leads qualifiés / mois</span></div>
+          <div class="stat-box"><span class="num" data-count="8000">0</span><span class="label">contacts qualifiés CRM</span></div>
+          <div class="stat-box"><span class="num" data-count="40">0</span><span class="suffix">%</span><span class="label">gain d'automatisation</span></div>
+        </div>
       </div>
-      <div class="stat-row reveal">
-        <div class="stat-box"><span class="num" data-count="90">0</span><span class="suffix">+</span><span class="label">leads qualifiés / mois</span></div>
-        <div class="stat-box"><span class="num" data-count="8000">0</span><span class="label">contacts qualifiés CRM</span></div>
-        <div class="stat-box"><span class="num" data-count="40">0</span><span class="suffix">%</span><span class="label">gain d'automatisation</span></div>
+      <div class="hero-photo-wrap reveal">
+        <img class="hero-photo" src="photo-daryne-voufo.jpg" alt="Portrait de Daryne Voufo">
       </div>
     </div>
     <div class="scroll-cue">Explorer <span class="cue-arrow">↓</span></div>
@@ -259,13 +318,29 @@
       <p class="reveal">Diplômée du Master 2 Digitalisation des Parcours Clients à l'EM Strasbourg, j'ai construit mon parcours professionnel autour d'une seule idée : comprendre un parcours client, le piloter avec de la donnée, et accompagner le changement qu'il implique en interne.</p>
       <p class="reveal">Une alternance chez Lemonway (fintech) m'a permis de maîtriser l'ensemble du funnel d'acquisition B2B — de la campagne à la conversion. Aujourd'hui, je recherche un premier poste qui prolonge cette trajectoire, à la croisée du marketing et de l'IT.</p>
       <p class="reveal">Je m'intéresse aussi de plus en plus à l'IA générative et aux agents, que j'explore activement pour monter en compétence et gagner en performance dans mes futures missions.</p>
-      <div class="trajectory reveal">
-        <span class="stop">EM Strasbourg — M2 Parcours Clients</span>
-        <span class="arrow">→</span>
-        <span class="stop">Lemonway — Digital Marketing Officer</span>
-        <span class="arrow">→</span>
-        <span class="stop">Premier poste — Marketing digital × IT</span>
-      </div>
+      <svg class="tree reveal" viewBox="0 0 640 400" role="img" aria-label="Mon parcours, comme un arbre : racines EM Strasbourg et American Cola, tronc marketing digital et parcours client, branches CFPE France Parrainages et Lemonway, et un bourgeon IA & agents vers un premier poste en 2026">
+        <path class="tree-path root" d="M320,370 Q250,365 180,358"/>
+        <path class="tree-path root" d="M320,370 Q390,365 460,358"/>
+        <path class="tree-path trunk" d="M320,370 L320,235"/>
+        <path class="tree-path branch" d="M320,235 Q210,195 150,138"/>
+        <path class="tree-path branch" d="M320,235 Q430,195 490,138"/>
+        <path class="tree-path apex" d="M320,235 L320,62"/>
+
+        <circle class="tree-node" cx="180" cy="358" r="5"/>
+        <circle class="tree-node" cx="460" cy="358" r="5"/>
+        <circle class="tree-node trunk-node" cx="320" cy="235" r="6"/>
+        <circle class="tree-node branch-node" cx="150" cy="138" r="6"/>
+        <circle class="tree-node branch-node" cx="490" cy="138" r="6"/>
+        <circle class="tree-node apex-node" cx="320" cy="62" r="7"/>
+
+        <text class="tree-label" x="180" y="382" text-anchor="middle">EM Strasbourg — M2</text>
+        <text class="tree-label" x="460" y="382" text-anchor="middle">American Cola · 2022</text>
+        <text class="tree-label" x="150" y="122" text-anchor="middle">CFPE France Parrainages · 2023</text>
+        <text class="tree-label" x="490" y="122" text-anchor="middle">Lemonway · 2024–2025</text>
+        <text class="tree-label tree-label--gold" x="320" y="46" text-anchor="middle">IA & Agents · Premier poste 2026</text>
+        <text class="tree-label tree-label--trunk" x="395" y="255" text-anchor="start">Marketing digital ×</text>
+        <text class="tree-label tree-label--trunk" x="395" y="270" text-anchor="start">Parcours client</text>
+      </svg>
     </div>
   </section>
 
@@ -298,7 +373,7 @@
       <p class="eyebrow reveal">Expérience professionnelle</p>
       <div class="job-head reveal">
         <span class="job-role">Digital Marketing Officer</span>
-        <span class="job-meta">Lemonway · Paris</span>
+        <span class="job-meta"><img class="company-logo" src="logos/lemonway.png" alt="Lemonway">Lemonway · Paris</span>
       </div>
       <div class="job-dates reveal">09/2024 – 09/2025</div>
       <div class="stat-row reveal" style="margin-bottom:22px;">
@@ -321,7 +396,7 @@
       <p class="eyebrow reveal">Expérience professionnelle</p>
       <div class="job-head reveal">
         <span class="job-role">Chargée de Marketing Digital</span>
-        <span class="job-meta">CFPE France Parrainages · Paris</span>
+        <span class="job-meta"><img class="company-logo" src="logos/france-parrainages.png" alt="France Parrainages">CFPE France Parrainages · Paris</span>
       </div>
       <div class="job-dates reveal">08/2023 – 01/2024</div>
       <div class="stat-row reveal" style="margin-bottom:22px;">
@@ -343,7 +418,7 @@
       <p class="eyebrow reveal">Expérience professionnelle</p>
       <div class="job-head reveal">
         <span class="job-role">Assistante Chef de Produit</span>
-        <span class="job-meta">American Cola (Source du Pays) · Douala, Cameroun</span>
+        <span class="job-meta"><img class="company-logo" src="logos/source-du-pays.png" alt="Source du Pays">American Cola (Source du Pays) · Douala, Cameroun</span>
       </div>
       <div class="job-dates reveal">03/2022 – 08/2022</div>
       <div class="stat-row reveal" style="margin-bottom:22px;">
@@ -364,34 +439,38 @@
       <div class="projets-grid reveal">
         <div class="projet-card">
           <span class="projet-tag">Audit UX & marketing</span>
+          <img class="projet-logo" src="logos/bnp-paribas.svg" alt="BNP Paribas">
           <h3>Parcours de souscription — BNP Paribas</h3>
           <p>Le tunnel de souscription en ligne perdait des clients à chaque étape. J'ai disséqué le parcours, isolé les frictions critiques et livré un plan d'action concret — jusqu'à la conduite du changement pour le faire adopter en interne.</p>
-          <a class="btn btn-outline btn-sm" href="Audit_Parcours_BNP_Paribas.docx" download>Télécharger l'étude</a>
+          <button type="button" class="btn btn-outline btn-sm" data-doc="Audit_Parcours_BNP_Paribas.docx" data-doc-name="Audit — Parcours de souscription BNP Paribas">Télécharger l'étude</button>
         </div>
         <div class="projet-card">
           <span class="projet-tag">Audit SEO · 2025</span>
+          <span class="brand-wordmark">MUSTELA</span>
           <h3>Audit SEO complet — Mustela</h3>
           <p>56 pages d'audit sur mustela.fr : j'ai passé le site Shopify au crible — technique, sémantique, netlinking, EEAT — et livré des recommandations concrètes pour regagner en visibilité sur Google.</p>
-          <a class="btn btn-outline btn-sm" href="Audit_SEO_Mustela.pdf" download>Télécharger l'audit</a>
+          <button type="button" class="btn btn-outline btn-sm" data-doc="Audit_SEO_Mustela.pdf" data-doc-name="Audit SEO — Mustela">Télécharger l'audit</button>
         </div>
         <div class="projet-card">
           <span class="projet-tag">Data & pilotage</span>
+          <img class="projet-logo" src="logos/bnp-paribas.svg" alt="BNP Paribas">
           <h3>Dashboard de pilotage — Power BI</h3>
           <p>Le funnel de souscription enfin lisible en un coup d'œil : conversion par canal, point de friction critique identifié, pilotage data en temps réel.</p>
           <a class="btn btn-outline btn-sm" href="Dashboard_Parcours_Souscription_BNP.html" target="_blank">Voir le dashboard</a>
         </div>
         <div class="projet-card">
           <span class="projet-tag">Conduite du changement</span>
+          <img class="projet-logo" src="logos/lemonway.png" alt="Lemonway">
           <h3>Adoption d'un assistant IA — Lemonway</h3>
           <p>Comment faire adopter l'IA à des équipes qui s'en méfient ? Un plan concret : résistances anticipées, formation terrain, garde-fous réglementaires.</p>
-          <a class="btn btn-outline btn-sm" href="Note_Conduite_Changement_IA_Lemonway.docx" download>Télécharger la note</a>
+          <button type="button" class="btn btn-outline btn-sm" data-doc="Note_Conduite_Changement_IA_Lemonway.docx" data-doc-name="Note — Conduite du changement IA Lemonway">Télécharger la note</button>
         </div>
         <div class="projet-card in-progress">
           <span class="badge-progress">En cours</span>
           <span class="projet-tag">Data science marketing</span>
           <h3>Pilotage d'une campagne bancaire — Kaggle</h3>
           <p>Un dataset bancaire brut, du bruit partout : je nettoie, je feature-engineer, direction un dashboard de ciblage prêt à guider la prochaine campagne.</p>
-          <a class="btn btn-outline btn-sm" href="nettoyage_bank_marketing.py" download>Voir le script</a>
+          <button type="button" class="btn btn-outline btn-sm" data-doc="nettoyage_bank_marketing.py" data-doc-name="Script — Nettoyage Bank Marketing">Voir le script</button>
         </div>
       </div>
     </div>
@@ -442,12 +521,21 @@
     <div class="slide-inner">
       <p class="eyebrow reveal">Contact</p>
       <h2 class="contact-title reveal">Discutons de mon prochain poste</h2>
+      <div class="contact-person reveal">
+        <img class="contact-avatar" src="photo-daryne-voufo.jpg" alt="Daryne Voufo">
+        <div>
+          <strong>Daryne Voufo</strong>
+          <span>Marketing digital · Parcours client</span>
+        </div>
+      </div>
+      <p class="contact-pitch reveal">Au-delà de mon CV, que vous trouverez en pièce jointe, je suis convaincue que la véritable valeur d'une collaboration se découvre à travers l'échange. Ce serait un réel plaisir de pouvoir vous rencontrer afin de vous exposer plus en détail mes motivations et d'envisager ensemble les perspectives d'une future collaboration.</p>
+      <p class="contact-pitch contact-pitch--en reveal">Beyond my CV, which you'll find attached, I believe the true value of a collaboration is best discovered through conversation. It would be a real pleasure to meet you, to share my motivations in more depth, and to explore together what a future collaboration could look like.</p>
       <p class="contact-sub reveal">Disponible pour un premier emploi à partir de 2026 en marketing digital (profil pont marketing × IT), mobile Paris / Île-de-France et Bruxelles. Actuellement en veille active sur l'IA générative et les agents pour renforcer mon impact.</p>
       <div class="contact-links reveal">
         <a href="mailto:voufodaryne072@gmail.com">voufodaryne072@gmail.com</a>
         <a href="tel:+33753157627">+33 (0)7 53 15 76 27</a>
         <a href="https://www.linkedin.com/in/daryne-voufo-133938203/" target="_blank">LinkedIn</a>
-        <a class="btn-primary" href="CV_Daryne_Voufo.pdf" download>Télécharger le CV</a>
+        <button type="button" class="btn-primary" data-doc="CV_Daryne_Voufo.pdf" data-doc-name="CV — Daryne Voufo">Télécharger le CV</button>
       </div>
       <p class="contact-footer reveal">Daryne Voufo — Marketing digital & transformation des parcours clients · 2026</p>
     </div>
@@ -471,6 +559,27 @@
 <button class="nav-arrow nav-next" aria-label="Slide suivante">›</button>
 <div class="slide-counter"><span class="cur">01</span> / <span class="total">09</span></div>
 
+<div class="lead-modal" id="leadModal" aria-hidden="true">
+  <div class="lead-modal-backdrop" data-modal-close></div>
+  <div class="lead-modal-card" role="dialog" aria-modal="true" aria-labelledby="leadModalTitle">
+    <button type="button" class="lead-modal-close" data-modal-close aria-label="Fermer">✕</button>
+    <p class="eyebrow" style="margin-bottom:8px;">Accès au document</p>
+    <h3 id="leadModalTitle" class="lead-modal-title">Un dernier pas avant le téléchargement</h3>
+    <p class="lead-modal-doc"></p>
+    <form id="leadForm" novalidate>
+      <label>Nom
+        <input type="text" name="name" required autocomplete="name">
+      </label>
+      <label>Email
+        <input type="email" name="email" required autocomplete="email">
+      </label>
+      <button type="submit" class="btn btn-primary lead-submit">Télécharger le document</button>
+    </form>
+    <p class="lead-modal-success" hidden>Merci ! Le téléchargement démarre…</p>
+    <p class="lead-modal-privacy">Utilisé uniquement pour vous recontacter au sujet de cette candidature.</p>
+  </div>
+</div>
+
 <script>
 (function(){
   var slides = Array.from(document.querySelectorAll('.slide'));
@@ -485,6 +594,12 @@
   var curLabel = document.querySelector('.slide-counter .cur');
   var topbar = document.querySelector('.topbar');
   var body = document.body;
+
+  var leadModal = document.getElementById('leadModal');
+  var leadForm = document.getElementById('leadForm');
+  var leadDocLabel = document.querySelector('.lead-modal-doc');
+  var leadSuccess = document.querySelector('.lead-modal-success');
+  var pendingDoc = null, pendingDocName = '';
 
   function pad(n){ return n < 10 ? '0' + n : '' + n; }
 
@@ -530,7 +645,50 @@
     return slides[current].querySelector('.slide-inner');
   }
 
+  // --- Lead capture before download ---
+  function openLeadModal(doc, docName){
+    pendingDoc = doc;
+    pendingDocName = docName;
+    leadDocLabel.textContent = 'Document : ' + docName;
+    leadForm.hidden = false;
+    leadSuccess.hidden = true;
+    leadForm.reset();
+    leadModal.classList.add('open');
+    leadModal.setAttribute('aria-hidden', 'false');
+    setTimeout(function(){ leadForm.name.focus(); }, 300);
+  }
+
+  function closeLeadModal(){
+    leadModal.classList.remove('open');
+    leadModal.setAttribute('aria-hidden', 'true');
+  }
+
+  function triggerDownload(path){
+    var a = document.createElement('a');
+    a.href = path;
+    a.download = path.split('/').pop();
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  }
+
+  // TODO: brancher ici l'enregistrement réel du contact (hébergement + stockage à confirmer)
+  function sendLead(name, email, docName){
+    console.log('Lead captured (pas encore relié à un stockage) :', name, email, docName);
+    return Promise.resolve();
+  }
+
   document.addEventListener('click', function(e){
+    var doc = e.target.closest('[data-doc]');
+    if(doc){
+      e.preventDefault();
+      openLeadModal(doc.getAttribute('data-doc'), doc.getAttribute('data-doc-name'));
+      return;
+    }
+    if(e.target.closest('[data-modal-close]')){
+      closeLeadModal();
+      return;
+    }
     var t = e.target.closest('[data-slide]');
     if(t){
       e.preventDefault();
@@ -539,10 +697,25 @@
     }
   });
 
+  leadForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    var name = leadForm.name.value.trim();
+    var email = leadForm.email.value.trim();
+    var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    if(!name || !emailOk) return;
+    sendLead(name, email, pendingDocName).finally(function(){
+      leadForm.hidden = true;
+      leadSuccess.hidden = false;
+      triggerDownload(pendingDoc);
+      setTimeout(closeLeadModal, 1600);
+    });
+  });
+
   prevBtn.addEventListener('click', function(){ goTo(current - 1); });
   nextBtn.addEventListener('click', function(){ goTo(current + 1); });
 
   window.addEventListener('wheel', function(e){
+    if(leadModal.classList.contains('open')) return;
     var inner = activeInner();
     var atTop = inner.scrollTop <= 0;
     var atBottom = inner.scrollTop + inner.clientHeight >= inner.scrollHeight - 1;
@@ -564,6 +737,10 @@
   }, { passive: false });
 
   window.addEventListener('keydown', function(e){
+    if(leadModal.classList.contains('open')){
+      if(e.key === 'Escape') closeLeadModal();
+      return;
+    }
     if(body.classList.contains('menu-open')){
       if(e.key === 'Escape') closeMenu();
       return;
@@ -587,6 +764,7 @@
   var touchStartY = 0;
   window.addEventListener('touchstart', function(e){ touchStartY = e.touches[0].clientY; }, { passive: true });
   window.addEventListener('touchend', function(e){
+    if(leadModal.classList.contains('open')) return;
     var dy = touchStartY - e.changedTouches[0].clientY;
     if(Math.abs(dy) < 60) return;
     var inner = activeInner();
