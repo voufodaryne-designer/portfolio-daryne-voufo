@@ -41,13 +41,20 @@
   .logo-mark circle.ring{fill:none; stroke:var(--navy); stroke-width:2.4;}
   .logo-mark text{font-family:var(--serif); font-weight:600; fill:var(--gold);}
   .logo-name{font-family:var(--serif); font-weight:600; font-size:16.5px; color:var(--navy); letter-spacing:.01em;}
-  .topbar-actions{display:flex; align-items:center; gap:14px;}
+  .topbar-actions{display:flex; align-items:center; gap:12px;}
   .btn{display:inline-flex; align-items:center; gap:8px; padding:10px 20px; border-radius:6px; font-size:14px; font-weight:600; text-decoration:none; border:1.5px solid transparent; cursor:pointer; transition:all .15s;}
   .btn-primary{background:var(--navy); color:#fff;}
   .btn-primary:hover{background:var(--navy-2); transform:translateY(-1px);}
   .btn-outline{border-color:var(--navy); color:var(--navy); background:transparent;}
   .btn-outline:hover{background:var(--navy); color:#fff;}
   .btn-sm{padding:8px 16px; font-size:13px;}
+
+  .lang-toggle{display:flex; border:1px solid var(--border); border-radius:20px; overflow:hidden; background:var(--surface); cursor:pointer;}
+  .lang-toggle .lang-opt{padding:6px 11px; font-size:11.5px; font-weight:700; color:var(--muted-2); transition:background .2s ease, color .2s ease;}
+  .lang-toggle .lang-opt.active{background:var(--navy); color:#fff;}
+  header.topbar.on-dark .lang-toggle{background:rgba(255,255,255,0.1); border-color:rgba(255,255,255,0.3);}
+  header.topbar.on-dark .lang-toggle .lang-opt{color:#C7D2E0;}
+  header.topbar.on-dark .lang-toggle .lang-opt.active{background:#fff; color:var(--navy);}
 
   .menu-toggle{width:38px; height:38px; border:1px solid var(--border); border-radius:8px; background:var(--surface); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;}
   .menu-toggle span{width:16px; height:2px; background:var(--navy); border-radius:2px; transition:transform .25s ease, opacity .25s ease;}
@@ -190,8 +197,7 @@
   .contact-avatar{width:56px; height:56px; border-radius:50%; object-fit:cover; border:2px solid var(--gold); flex-shrink:0;}
   .contact-person strong{display:block; color:#fff; font-family:var(--serif); font-size:16px; font-weight:600;}
   .contact-person span{display:block; color:#9FB0C4; font-size:12.5px; margin-top:2px;}
-  .contact-pitch{color:#E7ECF3; font-size:15.5px; margin-bottom:14px; max-width:560px; line-height:1.6;}
-  .contact-pitch--en{color:#93A5BB; font-style:italic; font-size:13.5px; margin-bottom:24px;}
+  .contact-pitch{color:#E7ECF3; font-size:15.5px; margin-bottom:24px; max-width:560px; line-height:1.6;}
   .contact-sub{color:#C7D2E0; font-size:14.5px; margin-bottom:30px; max-width:520px;}
   .contact-links{display:flex; gap:14px; flex-wrap:wrap; margin-bottom:40px;}
   .contact-links a, .contact-links button{color:#fff; font-size:14px; text-decoration:none; border:1px solid rgba(255,255,255,0.3); background:transparent; padding:9px 16px; border-radius:6px; font-weight:600; cursor:pointer; transition:background .2s ease; appearance:none; -webkit-appearance:none; font-family:inherit;}
@@ -269,7 +275,10 @@
     <span class="logo-name">Daryne Voufo</span>
   </a>
   <div class="topbar-actions">
-    <button type="button" class="btn btn-outline btn-sm" data-doc="CV_Daryne_Voufo.pdf" data-doc-name="CV — Daryne Voufo">CV</button>
+    <button type="button" class="lang-toggle" id="langToggle" aria-label="Changer de langue / Switch language">
+      <span class="lang-opt" data-lang-opt="fr">FR</span><span class="lang-opt" data-lang-opt="en">EN</span>
+    </button>
+    <button type="button" class="btn btn-outline btn-sm" data-doc-fr="CV_Daryne_Voufo.pdf" data-doc-en="CV_Daryne_Voufo_EN.pdf" data-name-fr="CV — Daryne Voufo" data-name-en="CV — Daryne Voufo">CV</button>
     <button class="menu-toggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </header>
@@ -277,14 +286,14 @@
 <nav class="slide-menu" aria-hidden="true">
   <button class="menu-close" aria-label="Fermer">✕</button>
   <ul>
-    <li><a data-slide="0">Accueil</a></li>
-    <li><a data-slide="1">À propos</a></li>
-    <li><a data-slide="2">Expertise</a></li>
+    <li><a data-slide="0" data-i18n="menu.0">Accueil</a></li>
+    <li><a data-slide="1" data-i18n="menu.1">À propos</a></li>
+    <li><a data-slide="2" data-i18n="menu.2">Expertise</a></li>
     <li><a data-slide="3">Lemonway</a></li>
     <li><a data-slide="4">CFPE France Parrainages</a></li>
     <li><a data-slide="5">American Cola</a></li>
-    <li><a data-slide="6">Projets</a></li>
-    <li><a data-slide="7">Compétences</a></li>
+    <li><a data-slide="6" data-i18n="menu.6">Projets</a></li>
+    <li><a data-slide="7" data-i18n="menu.7">Compétences</a></li>
     <li><a data-slide="8">Contact</a></li>
   </ul>
 </nav>
@@ -295,33 +304,33 @@
     <div class="slide-inner hero-inner">
       <div class="hero-text">
         <svg class="logo-mark logo-mark--hero reveal" viewBox="0 0 44 44"><circle class="ring" cx="22" cy="22" r="19"/><text x="22" y="28" font-size="15" text-anchor="middle">DV</text></svg>
-        <p class="eyebrow reveal">Marketing digital · Parcours client · Conduite du changement</p>
-        <h1 class="hero-headline reveal">Je transforme les parcours clients à l'ère du digital.</h1>
-        <p class="hero-sub reveal">Chargée de Web Marketing formée à la digitalisation des parcours clients (EM Strasbourg), je relie l'acquisition, la donnée et la conduite du changement — au croisement du marketing et de l'IT.</p>
+        <p class="eyebrow reveal" data-i18n="hero.eyebrow">Marketing digital · Parcours client · Conduite du changement</p>
+        <h1 class="hero-headline reveal" data-i18n="hero.headline">Je transforme les parcours clients à l'ère du digital.</h1>
+        <p class="hero-sub reveal" data-i18n="hero.sub">Chargée de Web Marketing formée à la digitalisation des parcours clients (EM Strasbourg), je relie l'acquisition, la donnée et la conduite du changement — au croisement du marketing et de l'IT.</p>
         <div class="hero-actions reveal">
-          <a class="btn btn-primary" data-slide="6">Voir mes projets</a>
-          <button type="button" class="btn btn-outline" data-doc="CV_Daryne_Voufo.pdf" data-doc-name="CV — Daryne Voufo">Télécharger mon CV</button>
+          <a class="btn btn-primary" data-slide="6" data-i18n="hero.cta.projects">Voir mes projets</a>
+          <button type="button" class="btn btn-outline" data-doc-fr="CV_Daryne_Voufo.pdf" data-doc-en="CV_Daryne_Voufo_EN.pdf" data-name-fr="CV — Daryne Voufo" data-name-en="CV — Daryne Voufo" data-i18n="hero.cta.cv">Télécharger mon CV</button>
         </div>
         <div class="stat-row reveal">
-          <div class="stat-box"><span class="num" data-count="90">0</span><span class="suffix">+</span><span class="label">leads qualifiés / mois</span></div>
-          <div class="stat-box"><span class="num" data-count="8000">0</span><span class="label">contacts qualifiés CRM</span></div>
-          <div class="stat-box"><span class="num" data-count="40">0</span><span class="suffix">%</span><span class="label">gain d'automatisation</span></div>
+          <div class="stat-box"><span class="num" data-count="90">0</span><span class="suffix">+</span><span class="label" data-i18n="stat.leads">leads qualifiés / mois</span></div>
+          <div class="stat-box"><span class="num" data-count="8000">0</span><span class="label" data-i18n="stat.crm">contacts qualifiés CRM</span></div>
+          <div class="stat-box"><span class="num" data-count="40">0</span><span class="suffix">%</span><span class="label" data-i18n="stat.automation">gain d'automatisation</span></div>
         </div>
       </div>
       <div class="hero-photo-wrap reveal">
         <img class="hero-photo" src="photo-daryne-voufo.jpg" alt="Portrait de Daryne Voufo">
       </div>
     </div>
-    <div class="scroll-cue">Explorer <span class="cue-arrow">↓</span></div>
+    <div class="scroll-cue"><span data-i18n="hero.scroll">Explorer</span> <span class="cue-arrow">↓</span></div>
   </section>
 
   <section class="slide" id="slide-about">
     <div class="slide-inner">
-      <p class="eyebrow reveal">À propos</p>
-      <h2 class="section-title reveal">Comprendre un parcours, avant de le transformer</h2>
-      <p class="reveal">Tout est parti d'une question que je me pose encore à chaque projet : pourquoi ce client abandonne-t-il ici, précisément ? Cette curiosité m'a menée du terrain chez American Cola à Douala jusqu'aux amphithéâtres de l'EM Strasbourg, où j'ai enchaîné un Master 1 Marketing & Relation Clients puis un Master 2 Digitalisation des Parcours Clients — deux années à disséquer, chiffre après chiffre, ce qui fait qu'un parcours convertit ou échoue.</p>
-      <p class="reveal">Chez Lemonway, cette conviction est devenue un métier : piloter un funnel B2B de bout en bout, de la campagne à la conversion, avec la donnée comme boussole. Aujourd'hui, je cherche un premier poste qui prolonge cette trajectoire, à la croisée du marketing et de l'IT.</p>
-      <p class="reveal">Et parce que ce métier change vite, j'apprends aussi vite : je m'immerge dans l'IA générative et les agents pour rester à la pointe et démultiplier mon impact dès mes premières missions.</p>
+      <p class="eyebrow reveal" data-i18n="about.eyebrow">À propos</p>
+      <h2 class="section-title reveal" data-i18n="about.title">Comprendre un parcours, avant de le transformer</h2>
+      <p class="reveal" data-i18n="about.p1">Tout est parti d'une question que je me pose encore à chaque projet : pourquoi ce client abandonne-t-il ici, précisément ? Cette curiosité m'a menée du terrain chez American Cola à Douala jusqu'aux amphithéâtres de l'EM Strasbourg, où j'ai enchaîné un Master 1 Marketing & Relation Clients puis un Master 2 Digitalisation des Parcours Clients — deux années à disséquer, chiffre après chiffre, ce qui fait qu'un parcours convertit ou échoue.</p>
+      <p class="reveal" data-i18n="about.p2">Chez Lemonway, cette conviction est devenue un métier : piloter un funnel B2B de bout en bout, de la campagne à la conversion, avec la donnée comme boussole. Aujourd'hui, je cherche un premier poste qui prolonge cette trajectoire, à la croisée du marketing et de l'IT.</p>
+      <p class="reveal" data-i18n="about.p3">Et parce que ce métier change vite, j'apprends aussi vite : je m'immerge dans l'IA générative et les agents pour rester à la pointe et démultiplier mon impact dès mes premières missions.</p>
       <svg class="tree reveal" viewBox="0 0 640 400" role="img" aria-label="Mon parcours, comme un arbre : racines EM Strasbourg (M1 et M2) et American Cola, tronc marketing digital et parcours client, branches CFPE France Parrainages et Lemonway, et un bourgeon IA & agents vers un premier poste en 2026">
         <path class="tree-path root" d="M320,370 Q250,365 180,358"/>
         <path class="tree-path root" d="M320,370 Q390,365 460,358"/>
@@ -341,32 +350,32 @@
         <text class="tree-label" x="460" y="382" text-anchor="middle">American Cola · 2022</text>
         <text class="tree-label" x="150" y="122" text-anchor="middle">CFPE France Parrainages · 2023</text>
         <text class="tree-label" x="490" y="122" text-anchor="middle">Lemonway · 2024–2025</text>
-        <text class="tree-label tree-label--gold" x="320" y="46" text-anchor="middle">IA & Agents · Premier poste 2026</text>
-        <text class="tree-label tree-label--trunk" x="395" y="255" text-anchor="start">Marketing digital ×</text>
-        <text class="tree-label tree-label--trunk" x="395" y="270" text-anchor="start">Parcours client</text>
+        <text class="tree-label tree-label--gold" x="320" y="46" text-anchor="middle" data-i18n="tree.apex">IA & Agents · Premier poste 2026</text>
+        <text class="tree-label tree-label--trunk" x="395" y="255" text-anchor="start" data-i18n="tree.trunk1">Marketing digital ×</text>
+        <text class="tree-label tree-label--trunk" x="395" y="270" text-anchor="start" data-i18n="tree.trunk2">Parcours client</text>
       </svg>
     </div>
   </section>
 
   <section class="slide" id="slide-piliers">
     <div class="slide-inner">
-      <p class="eyebrow reveal">Expertise</p>
-      <h2 class="section-title reveal">Trois piliers, une seule conviction</h2>
+      <p class="eyebrow reveal" data-i18n="piliers.eyebrow">Expertise</p>
+      <h2 class="section-title reveal" data-i18n="piliers.title">Trois piliers, une seule conviction</h2>
       <div class="piliers-grid reveal">
         <div class="pilier-card">
           <svg class="pilier-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="24" cy="24" r="16"/><circle cx="24" cy="24" r="9"/><circle cx="24" cy="24" r="2.4" fill="currentColor" stroke="none"/></svg>
-          <h3>Marketing digital & acquisition</h3>
-          <p>Google Ads, LinkedIn Ads, SEO/SEA, CRM (Salesforce, Pardot, HubSpot) — piloter un funnel de bout en bout, de la campagne au lead qualifié.</p>
+          <h3 data-i18n="pilier1.title">Marketing digital & acquisition</h3>
+          <p data-i18n="pilier1.desc">Google Ads, LinkedIn Ads, SEO/SEA, CRM (Salesforce, Pardot, HubSpot) — piloter un funnel de bout en bout, de la campagne au lead qualifié.</p>
         </div>
         <div class="pilier-card">
           <svg class="pilier-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 38c6-2 10-2 14-8s4-10 10-10 8 6 12 4"/><circle cx="6" cy="38" r="2.2" fill="currentColor" stroke="none"/><circle cx="42" cy="24" r="2.2" fill="currentColor" stroke="none"/></svg>
-          <h3>Digitalisation du parcours client</h3>
-          <p>Cartographier un parcours, identifier les frictions, et le repenser avec un double regard marketing et expérience utilisateur.</p>
+          <h3 data-i18n="pilier2.title">Digitalisation du parcours client</h3>
+          <p data-i18n="pilier2.desc">Cartographier un parcours, identifier les frictions, et le repenser avec un double regard marketing et expérience utilisateur.</p>
         </div>
         <div class="pilier-card">
           <svg class="pilier-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="14" r="5"/><circle cx="34" cy="14" r="5"/><path d="M6 38c1-7 6-11 10-11s9 4 10 11"/><path d="M24 38c1-7 6-11 10-11s7 3 8 8"/></svg>
-          <h3>Conduite du changement</h3>
-          <p>Faire adopter un outil ou un process par des équipes non-tech — anticiper les résistances plutôt que les subir.</p>
+          <h3 data-i18n="pilier3.title">Conduite du changement</h3>
+          <p data-i18n="pilier3.desc">Faire adopter un outil ou un process par des équipes non-tech — anticiper les résistances plutôt que les subir.</p>
         </div>
       </div>
     </div>
@@ -374,25 +383,25 @@
 
   <section class="slide job" id="slide-job1">
     <div class="slide-inner">
-      <p class="eyebrow reveal">Expérience professionnelle</p>
+      <p class="eyebrow reveal" data-i18n="job.eyebrow">Expérience professionnelle</p>
       <div class="job-head reveal">
-        <span class="job-role">Digital Marketing Officer</span>
-        <span class="job-meta"><img class="company-logo" src="logos/lemonway.png" alt="Lemonway">Lemonway · Paris</span>
+        <span class="job-role" data-i18n="job1.role">Digital Marketing Officer</span>
+        <span class="job-meta"><img class="company-logo" src="logos/lemonway.png" alt="Lemonway"><span data-i18n="job1.meta">Lemonway · Paris</span></span>
       </div>
       <div class="job-dates reveal">09/2024 – 09/2025</div>
       <div class="stat-row reveal" style="margin-bottom:22px;">
-        <div class="stat-box"><span class="num" data-count="90">0</span><span class="suffix">+</span><span class="label">leads qualifiés / mois</span></div>
-        <div class="stat-box"><span class="num" data-count="40">0</span><span class="suffix">%</span><span class="label">gain vs traitement manuel</span></div>
-        <div class="stat-box"><span class="num" data-count="8000">0</span><span class="label">contacts qualifiés Salesforce</span></div>
+        <div class="stat-box"><span class="num" data-count="90">0</span><span class="suffix">+</span><span class="label" data-i18n="stat.leads">leads qualifiés / mois</span></div>
+        <div class="stat-box"><span class="num" data-count="40">0</span><span class="suffix">%</span><span class="label" data-i18n="job1.stat2">gain vs traitement manuel</span></div>
+        <div class="stat-box"><span class="num" data-count="8000">0</span><span class="label" data-i18n="job1.stat3">contacts qualifiés Salesforce</span></div>
       </div>
       <ul class="reveal">
-        <li>Animé la stratégie de contenu B2B bilingue FR/EN — 10 articles de blog, 10+ posts LinkedIn et 20+ contenus web ciblant les prospects</li>
-        <li>Piloté 6 campagnes digitales B2B (Google Ads, LinkedIn Ads, emailing) — 90 leads qualifiés (MQL) générés par mois en moyenne</li>
-        <li>Automatisé 4 scénarios de nurturing sous Pardot — gain de 40% sur le traitement manuel, conformité RGPD</li>
-        <li>Qualifié 8 000 contacts dans Salesforce CRM — réduction de 30% des leads non exploitables sur 3 mois</li>
-        <li>Augmenté le taux d'ouverture emailing de 20% via A/B testing et lead scoring comportemental</li>
-        <li>Construit 2 dashboards de suivi acquisition (trafic, conversion, ROI) et coordonné des webinars externes</li>
-        <li>Créé la newsletter prospects pour les marketplaces B2B/B2C et la plateforme de crowdfunding</li>
+        <li data-i18n="job1.li1">Animé la stratégie de contenu B2B bilingue FR/EN — 10 articles de blog, 10+ posts LinkedIn et 20+ contenus web ciblant les prospects</li>
+        <li data-i18n="job1.li2">Piloté 6 campagnes digitales B2B (Google Ads, LinkedIn Ads, emailing) — 90 leads qualifiés (MQL) générés par mois en moyenne</li>
+        <li data-i18n="job1.li3">Automatisé 4 scénarios de nurturing sous Pardot — gain de 40% sur le traitement manuel, conformité RGPD</li>
+        <li data-i18n="job1.li4">Qualifié 8 000 contacts dans Salesforce CRM — réduction de 30% des leads non exploitables sur 3 mois</li>
+        <li data-i18n="job1.li5">Augmenté le taux d'ouverture emailing de 20% via A/B testing et lead scoring comportemental</li>
+        <li data-i18n="job1.li6">Construit 2 dashboards de suivi acquisition (trafic, conversion, ROI) et coordonné des webinars externes</li>
+        <li data-i18n="job1.li7">Créé la newsletter prospects pour les marketplaces B2B/B2C et la plateforme de crowdfunding</li>
       </ul>
       <div class="job-stack reveal">Google Ads · LinkedIn Ads · Salesforce CRM · Pardot · GA4 · Looker Studio · WordPress · Jira</div>
     </div>
@@ -400,21 +409,21 @@
 
   <section class="slide job" id="slide-job2">
     <div class="slide-inner">
-      <p class="eyebrow reveal">Expérience professionnelle</p>
+      <p class="eyebrow reveal" data-i18n="job.eyebrow">Expérience professionnelle</p>
       <div class="job-head reveal">
-        <span class="job-role">Chargée de Marketing Digital</span>
-        <span class="job-meta"><img class="company-logo" src="logos/france-parrainages.png" alt="France Parrainages">CFPE France Parrainages · Paris</span>
+        <span class="job-role" data-i18n="job2.role">Chargée de Marketing Digital</span>
+        <span class="job-meta"><img class="company-logo" src="logos/france-parrainages.png" alt="France Parrainages"><span>CFPE France Parrainages · Paris</span></span>
       </div>
       <div class="job-dates reveal">08/2023 – 01/2024</div>
       <div class="stat-row reveal" style="margin-bottom:22px;">
-        <div class="stat-box"><span class="num" data-count="97">0</span><span class="suffix">%</span><span class="label">délivrabilité maintenue</span></div>
-        <div class="stat-box"><span class="num" data-count="18">0</span><span class="suffix">%</span><span class="label">taux de rebond en moins</span></div>
-        <div class="stat-box"><span class="num" data-count="7">0</span><span class="label">recommandations intégrées</span></div>
+        <div class="stat-box"><span class="num" data-count="97">0</span><span class="suffix">%</span><span class="label" data-i18n="job2.stat1">délivrabilité maintenue</span></div>
+        <div class="stat-box"><span class="num" data-count="18">0</span><span class="suffix">%</span><span class="label" data-i18n="job2.stat2">taux de rebond en moins</span></div>
+        <div class="stat-box"><span class="num" data-count="7">0</span><span class="label" data-i18n="job2.stat3">recommandations intégrées</span></div>
       </div>
       <ul class="reveal">
-        <li>Géré 8 campagnes emailing semestrielles (segmentation CRM, copywriting) — délivrabilité maintenue à 97%</li>
-        <li>Optimisé 5 parcours d'acquisition (SEO on-page, CTA, arborescence) via GA4 — taux de rebond réduit de 18%</li>
-        <li>Réalisé une analyse concurrentielle de 5 acteurs — 7 recommandations intégrées au plan marketing Q1 2024</li>
+        <li data-i18n="job2.li1">Géré 8 campagnes emailing semestrielles (segmentation CRM, copywriting) — délivrabilité maintenue à 97%</li>
+        <li data-i18n="job2.li2">Optimisé 5 parcours d'acquisition (SEO on-page, CTA, arborescence) via GA4 — taux de rebond réduit de 18%</li>
+        <li data-i18n="job2.li3">Réalisé une analyse concurrentielle de 5 acteurs — 7 recommandations intégrées au plan marketing Q1 2024</li>
       </ul>
       <div class="job-stack reveal">Webmecanik · Google Analytics 4 · WordPress · Canva · Mailchimp</div>
     </div>
@@ -422,62 +431,62 @@
 
   <section class="slide job" id="slide-job3">
     <div class="slide-inner">
-      <p class="eyebrow reveal">Expérience professionnelle</p>
+      <p class="eyebrow reveal" data-i18n="job.eyebrow">Expérience professionnelle</p>
       <div class="job-head reveal">
-        <span class="job-role">Assistante Chef de Produit</span>
-        <span class="job-meta"><img class="company-logo" src="logos/source-du-pays.png" alt="Source du Pays">American Cola (Source du Pays) · Douala, Cameroun</span>
+        <span class="job-role" data-i18n="job3.role">Assistante Chef de Produit</span>
+        <span class="job-meta"><img class="company-logo" src="logos/source-du-pays.png" alt="Source du Pays"><span data-i18n="job3.meta">American Cola (Source du Pays) · Douala, Cameroun</span></span>
       </div>
       <div class="job-dates reveal">03/2022 – 08/2022</div>
       <div class="stat-row reveal" style="margin-bottom:22px;">
-        <div class="stat-box"><span class="num" data-count="120">0</span><span class="label">consommateurs interrogés</span></div>
-        <div class="stat-box"><span class="num" data-count="6">0</span><span class="label">concurrents analysés</span></div>
+        <div class="stat-box"><span class="num" data-count="120">0</span><span class="label" data-i18n="job3.stat1">consommateurs interrogés</span></div>
+        <div class="stat-box"><span class="num" data-count="6">0</span><span class="label" data-i18n="job3.stat2">concurrents analysés</span></div>
       </div>
       <ul class="reveal">
-        <li>Réalisé une étude de marché sur 120 consommateurs et une veille de 6 concurrents — cahier des charges livré pour le lancement produit</li>
-        <li>Analysé les données de performance post-lancement (ventes, parts de marché, retours terrain) — rapport mensuel formalisé</li>
+        <li data-i18n="job3.li1">Réalisé une étude de marché sur 120 consommateurs et une veille de 6 concurrents — cahier des charges livré pour le lancement produit</li>
+        <li data-i18n="job3.li2">Analysé les données de performance post-lancement (ventes, parts de marché, retours terrain) — rapport mensuel formalisé</li>
       </ul>
     </div>
   </section>
 
   <section class="slide" id="slide-projets">
     <div class="slide-inner">
-      <p class="eyebrow reveal">Études de cas</p>
-      <h2 class="section-title reveal">Des projets, pas des promesses</h2>
+      <p class="eyebrow reveal" data-i18n="projets.eyebrow">Études de cas</p>
+      <h2 class="section-title reveal" data-i18n="projets.title">Des projets, pas des promesses</h2>
       <div class="projets-grid reveal">
         <div class="projet-card">
-          <span class="projet-tag">Audit UX & marketing</span>
+          <span class="projet-tag" data-i18n="proj1.tag">Audit UX & marketing</span>
           <img class="projet-logo" src="logos/bnp-paribas.svg" alt="BNP Paribas">
-          <h3>Parcours de souscription — BNP Paribas</h3>
-          <p>Le tunnel de souscription en ligne perdait des clients à chaque étape. J'ai disséqué le parcours, isolé les frictions critiques et livré un plan d'action concret — jusqu'à la conduite du changement pour le faire adopter en interne.</p>
-          <button type="button" class="btn btn-outline btn-sm" data-doc="Audit_Parcours_BNP_Paribas.docx" data-doc-name="Audit — Parcours de souscription BNP Paribas">Télécharger l'étude</button>
+          <h3 data-i18n="proj1.title">Parcours de souscription — BNP Paribas</h3>
+          <p data-i18n="proj1.desc">Le tunnel de souscription en ligne perdait des clients à chaque étape. J'ai disséqué le parcours, isolé les frictions critiques et livré un plan d'action concret — jusqu'à la conduite du changement pour le faire adopter en interne.</p>
+          <button type="button" class="btn btn-outline btn-sm" data-doc-fr="Audit_Parcours_BNP_Paribas.docx" data-doc-en="Audit_Parcours_BNP_Paribas_EN.docx" data-name-fr="Audit — Parcours de souscription BNP Paribas" data-name-en="Study — BNP Paribas Subscription Journey" data-i18n="proj1.btn">Télécharger l'étude</button>
         </div>
         <div class="projet-card">
-          <span class="projet-tag">Audit SEO · 2025</span>
+          <span class="projet-tag" data-i18n="proj2.tag">Audit SEO · 2025</span>
           <span class="brand-wordmark">MUSTELA</span>
-          <h3>Audit SEO complet — Mustela</h3>
-          <p>56 pages d'audit sur mustela.fr : j'ai passé le site Shopify au crible — technique, sémantique, netlinking, EEAT — et livré des recommandations concrètes pour regagner en visibilité sur Google. Un audit du même type a aussi été mené pour Club Med.</p>
-          <button type="button" class="btn btn-outline btn-sm" data-doc="Audit_SEO_Mustela.pdf" data-doc-name="Audit SEO — Mustela">Télécharger l'audit</button>
+          <h3 data-i18n="proj2.title">Audit SEO complet — Mustela</h3>
+          <p data-i18n="proj2.desc">56 pages d'audit sur mustela.fr : j'ai passé le site Shopify au crible — technique, sémantique, netlinking, EEAT — et livré des recommandations concrètes pour regagner en visibilité sur Google. Un audit du même type a aussi été mené pour Club Med.</p>
+          <button type="button" class="btn btn-outline btn-sm" data-doc-fr="Audit_SEO_Mustela.pdf" data-doc-en="Audit_SEO_Mustela.pdf" data-name-fr="Audit SEO — Mustela" data-name-en="SEO Audit — Mustela" data-i18n="proj2.btn">Télécharger l'audit</button>
         </div>
         <div class="projet-card">
-          <span class="projet-tag">Data & pilotage</span>
+          <span class="projet-tag" data-i18n="proj3.tag">Data & pilotage</span>
           <img class="projet-logo" src="logos/bnp-paribas.svg" alt="BNP Paribas">
-          <h3>Dashboard de pilotage — Power BI</h3>
-          <p>Le funnel de souscription enfin lisible en un coup d'œil : conversion par canal, point de friction critique identifié, pilotage data en temps réel.</p>
-          <a class="btn btn-outline btn-sm" href="Dashboard_Parcours_Souscription_BNP.html" target="_blank">Voir le dashboard</a>
+          <h3 data-i18n="proj3.title">Dashboard de pilotage — Power BI</h3>
+          <p data-i18n="proj3.desc">Le funnel de souscription enfin lisible en un coup d'œil : conversion par canal, point de friction critique identifié, pilotage data en temps réel.</p>
+          <a class="btn btn-outline btn-sm" href="Dashboard_Parcours_Souscription_BNP.html" target="_blank" data-i18n="proj3.btn">Voir le dashboard</a>
         </div>
         <div class="projet-card">
-          <span class="projet-tag">Conduite du changement</span>
+          <span class="projet-tag" data-i18n="proj4.tag">Conduite du changement</span>
           <img class="projet-logo" src="logos/lemonway.png" alt="Lemonway">
-          <h3>Adoption d'un assistant IA — Lemonway</h3>
-          <p>Comment faire adopter l'IA à des équipes qui s'en méfient ? Un plan concret : résistances anticipées, formation terrain, garde-fous réglementaires.</p>
-          <button type="button" class="btn btn-outline btn-sm" data-doc="Note_Conduite_Changement_IA_Lemonway.docx" data-doc-name="Note — Conduite du changement IA Lemonway">Télécharger la note</button>
+          <h3 data-i18n="proj4.title">Adoption d'un assistant IA — Lemonway</h3>
+          <p data-i18n="proj4.desc">Comment faire adopter l'IA à des équipes qui s'en méfient ? Un plan concret : résistances anticipées, formation terrain, garde-fous réglementaires.</p>
+          <button type="button" class="btn btn-outline btn-sm" data-doc-fr="Note_Conduite_Changement_IA_Lemonway.docx" data-doc-en="Note_Conduite_Changement_IA_Lemonway_EN.docx" data-name-fr="Note — Conduite du changement IA Lemonway" data-name-en="Brief — Lemonway AI Change Management" data-i18n="proj4.btn">Télécharger la note</button>
         </div>
         <div class="projet-card in-progress">
-          <span class="badge-progress">En cours</span>
+          <span class="badge-progress" data-i18n="proj5.badge">En cours</span>
           <span class="projet-tag">Data science marketing</span>
-          <h3>Pilotage d'une campagne bancaire — Kaggle</h3>
-          <p>Un dataset bancaire brut, du bruit partout : je nettoie, je feature-engineer, direction un dashboard de ciblage prêt à guider la prochaine campagne.</p>
-          <button type="button" class="btn btn-outline btn-sm" data-doc="nettoyage_bank_marketing.py" data-doc-name="Script — Nettoyage Bank Marketing">Voir le script</button>
+          <h3 data-i18n="proj5.title">Pilotage d'une campagne bancaire — Kaggle</h3>
+          <p data-i18n="proj5.desc">Un dataset bancaire brut, du bruit partout : je nettoie, je feature-engineer, direction un dashboard de ciblage prêt à guider la prochaine campagne.</p>
+          <button type="button" class="btn btn-outline btn-sm" data-doc-fr="nettoyage_bank_marketing.py" data-doc-en="nettoyage_bank_marketing.py" data-name-fr="Script — Nettoyage Bank Marketing" data-name-en="Script — Bank Marketing Cleanup" data-i18n="proj5.btn">Voir le script</button>
         </div>
       </div>
     </div>
@@ -485,8 +494,8 @@
 
   <section class="slide" id="slide-competences">
     <div class="slide-inner">
-      <p class="eyebrow reveal">Compétences</p>
-      <h2 class="section-title reveal">La boîte à outils</h2>
+      <p class="eyebrow reveal" data-i18n="comp.eyebrow">Compétences</p>
+      <h2 class="section-title reveal" data-i18n="comp.title">La boîte à outils</h2>
       <div class="skills-grid reveal">
         <div class="skill-group">
           <h4>Acquisition & paid</h4>
@@ -509,34 +518,34 @@
         <div class="skill-group">
           <h4>Content & SEO</h4>
           <div class="tag-row">
-            <span class="tag">WordPress</span><span class="tag">Strapi</span><span class="tag">Canva</span><span class="tag">Content Marketing B2B</span><span class="tag">Copywriting FR/EN</span><span class="tag">SEMrush</span><span class="tag">Ahrefs</span><span class="tag">Screaming Frog</span><span class="tag">Search Console</span><span class="tag">Haloscan</span>
+            <span class="tag">WordPress</span><span class="tag">Strapi</span><span class="tag">Canva</span><span class="tag" data-i18n="tag.content">Content Marketing B2B</span><span class="tag" data-i18n="tag.copywriting">Copywriting FR/EN</span><span class="tag">SEMrush</span><span class="tag">Ahrefs</span><span class="tag">Screaming Frog</span><span class="tag">Search Console</span><span class="tag">Haloscan</span>
           </div>
         </div>
         <div class="skill-group">
-          <h4>Outils & productivité</h4>
+          <h4 data-i18n="group.tools">Outils & productivité</h4>
           <div class="tag-row">
             <span class="tag">Jira</span><span class="tag">Notion</span><span class="tag">Google Workspace</span><span class="tag">Microsoft 365</span>
           </div>
         </div>
         <div class="skill-group">
           <h4>IA & agents</h4>
-          <span class="badge-progress">En apprentissage</span>
+          <span class="badge-progress" data-i18n="badge.learning">En apprentissage</span>
           <div class="tag-row">
             <span class="tag">IA générative</span><span class="tag">Prompt design</span><span class="tag">Agents IA (Claude, ChatGPT)</span><span class="tag">ChatLLM</span>
           </div>
         </div>
         <div class="skill-group">
-          <h4>Langues</h4>
+          <h4 data-i18n="group.languages">Langues</h4>
           <div class="lang-row">
-            <div class="lang-pill"><span class="lang-name">Français</span><span class="lang-level">C2</span></div>
-            <div class="lang-pill"><span class="lang-name">Anglais</span><span class="lang-level">C2</span></div>
-            <div class="lang-pill"><span class="lang-name">Espagnol</span><span class="lang-level">A2</span></div>
+            <div class="lang-pill"><span class="lang-name" data-i18n="lang.fr">Français</span><span class="lang-level">C2</span></div>
+            <div class="lang-pill"><span class="lang-name" data-i18n="lang.en">Anglais</span><span class="lang-level">C2</span></div>
+            <div class="lang-pill"><span class="lang-name" data-i18n="lang.es">Espagnol</span><span class="lang-level">A2</span></div>
           </div>
         </div>
         <div class="skill-group">
-          <h4>Qualités humaines</h4>
+          <h4 data-i18n="group.qualities">Qualités humaines</h4>
           <div class="tag-row">
-            <span class="tag">Organisation</span><span class="tag">Rigueur</span><span class="tag">Autonomie</span><span class="tag">Communication</span><span class="tag">Esprit d'équipe</span><span class="tag">Curiosité</span><span class="tag">Force de proposition</span>
+            <span class="tag">Organisation</span><span class="tag" data-i18n="q.rigueur">Rigueur</span><span class="tag" data-i18n="q.autonomie">Autonomie</span><span class="tag">Communication</span><span class="tag" data-i18n="q.equipe">Esprit d'équipe</span><span class="tag" data-i18n="q.curiosite">Curiosité</span><span class="tag" data-i18n="q.proposition">Force de proposition</span>
           </div>
         </div>
       </div>
@@ -547,39 +556,38 @@
     <span class="contact-watermark" aria-hidden="true">DV</span>
     <div class="slide-inner">
       <p class="eyebrow reveal">Contact</p>
-      <h2 class="contact-title reveal">Discutons de mon prochain poste</h2>
+      <h2 class="contact-title reveal" data-i18n="contact.title">Discutons de mon prochain poste</h2>
       <div class="contact-person reveal">
         <img class="contact-avatar" src="photo-daryne-voufo.jpg" alt="Daryne Voufo">
         <div>
           <strong>Daryne Voufo</strong>
-          <span>Marketing digital · Parcours client</span>
+          <span data-i18n="contact.role">Marketing digital · Parcours client</span>
         </div>
       </div>
-      <p class="contact-pitch reveal">Ce portfolio montre ce que j'ai accompli ; c'est en échangeant que je peux vous montrer ce que je peux apporter. Si mon profil retient votre attention, j'aimerais beaucoup qu'on en discute de vive voix — au-delà du CV ci-joint, pour construire ensemble les contours d'une future collaboration.</p>
-      <p class="contact-pitch contact-pitch--en reveal">This portfolio shows what I've done; a conversation would show what I can bring to your team. If my profile catches your interest, I'd love to talk it through — beyond the attached CV, to shape together what a future collaboration could look like.</p>
-      <p class="contact-sub reveal">Disponible pour un premier emploi à partir de 2026 en marketing digital (profil pont marketing × IT), mobile Paris / Île-de-France et Bruxelles. Actuellement en veille active sur l'IA générative et les agents pour renforcer mon impact.</p>
+      <p class="contact-pitch reveal" data-i18n="contact.pitch">Ce portfolio montre ce que j'ai accompli ; c'est en échangeant que je peux vous montrer ce que je peux apporter. Si mon profil retient votre attention, j'aimerais beaucoup qu'on en discute de vive voix — au-delà du CV ci-joint, pour construire ensemble les contours d'une future collaboration.</p>
+      <p class="contact-sub reveal" data-i18n="contact.sub">Disponible pour un premier emploi à partir de 2026 en marketing digital (profil pont marketing × IT), mobile Paris / Île-de-France et Bruxelles. Actuellement en veille active sur l'IA générative et les agents pour renforcer mon impact.</p>
       <div class="contact-links reveal">
         <a href="mailto:voufodaryne072@gmail.com">voufodaryne072@gmail.com</a>
         <a href="tel:+33753157627">+33 (0)7 53 15 76 27</a>
         <a href="https://www.linkedin.com/in/daryne-voufo-133938203/" target="_blank">LinkedIn</a>
-        <button type="button" class="btn-primary" data-doc="CV_Daryne_Voufo.pdf" data-doc-name="CV — Daryne Voufo">Télécharger le CV</button>
+        <button type="button" class="btn-primary" data-doc-fr="CV_Daryne_Voufo.pdf" data-doc-en="CV_Daryne_Voufo_EN.pdf" data-name-fr="CV — Daryne Voufo" data-name-en="CV — Daryne Voufo" data-i18n="contact.cv">Télécharger le CV</button>
       </div>
-      <p class="contact-footer reveal">Daryne Voufo — Marketing digital & transformation des parcours clients · 2026</p>
+      <p class="contact-footer reveal" data-i18n="contact.footer">Daryne Voufo — Marketing digital & transformation des parcours clients · 2026</p>
     </div>
   </section>
 
 </main>
 
 <div class="side-nav" aria-hidden="true">
-  <button class="side-dot" data-slide="0" data-label="Accueil"></button>
-  <button class="side-dot" data-slide="1" data-label="À propos"></button>
-  <button class="side-dot" data-slide="2" data-label="Expertise"></button>
-  <button class="side-dot" data-slide="3" data-label="Lemonway"></button>
-  <button class="side-dot" data-slide="4" data-label="CFPE"></button>
-  <button class="side-dot" data-slide="5" data-label="American Cola"></button>
-  <button class="side-dot" data-slide="6" data-label="Projets"></button>
-  <button class="side-dot" data-slide="7" data-label="Compétences"></button>
-  <button class="side-dot" data-slide="8" data-label="Contact"></button>
+  <button class="side-dot" data-slide="0" data-label-fr="Accueil" data-label-en="Home" data-label="Accueil"></button>
+  <button class="side-dot" data-slide="1" data-label-fr="À propos" data-label-en="About" data-label="À propos"></button>
+  <button class="side-dot" data-slide="2" data-label-fr="Expertise" data-label-en="Expertise" data-label="Expertise"></button>
+  <button class="side-dot" data-slide="3" data-label-fr="Lemonway" data-label-en="Lemonway" data-label="Lemonway"></button>
+  <button class="side-dot" data-slide="4" data-label-fr="CFPE" data-label-en="CFPE" data-label="CFPE"></button>
+  <button class="side-dot" data-slide="5" data-label-fr="American Cola" data-label-en="American Cola" data-label="American Cola"></button>
+  <button class="side-dot" data-slide="6" data-label-fr="Projets" data-label-en="Projects" data-label="Projets"></button>
+  <button class="side-dot" data-slide="7" data-label-fr="Compétences" data-label-en="Skills" data-label="Compétences"></button>
+  <button class="side-dot" data-slide="8" data-label-fr="Contact" data-label-en="Contact" data-label="Contact"></button>
 </div>
 
 <button class="nav-arrow nav-prev" aria-label="Slide précédente">‹</button>
@@ -590,30 +598,163 @@
   <div class="lead-modal-backdrop" data-modal-close></div>
   <div class="lead-modal-card" role="dialog" aria-modal="true" aria-labelledby="leadModalTitle">
     <button type="button" class="lead-modal-close" data-modal-close aria-label="Fermer">✕</button>
-    <p class="eyebrow" style="margin-bottom:8px;">Accès au document</p>
-    <h3 id="leadModalTitle" class="lead-modal-title">Un dernier pas avant le téléchargement</h3>
+    <p class="eyebrow" style="margin-bottom:8px;" data-i18n="modal.eyebrow">Accès au document</p>
+    <h3 id="leadModalTitle" class="lead-modal-title" data-i18n="modal.title">Un dernier pas avant le téléchargement</h3>
     <p class="lead-modal-doc"></p>
     <form id="leadForm" name="leadForm" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
       <input type="hidden" name="form-name" value="leadForm">
       <p style="position:absolute; left:-9999px;" aria-hidden="true">
         <label>Ne pas remplir : <input name="bot-field" tabindex="-1" autocomplete="off"></label>
       </p>
-      <label>Nom
+      <label><span data-i18n="modal.name">Nom</span>
         <input type="text" name="name" required autocomplete="name">
       </label>
       <label>Email
         <input type="email" name="email" required autocomplete="email">
       </label>
       <input type="hidden" name="document" value="">
-      <button type="submit" class="btn btn-primary lead-submit">Télécharger le document</button>
+      <button type="submit" class="btn btn-primary lead-submit" data-i18n="modal.submit">Télécharger le document</button>
     </form>
-    <p class="lead-modal-success" hidden>Merci ! Le téléchargement démarre…</p>
-    <p class="lead-modal-privacy">Utilisé uniquement pour vous recontacter au sujet de cette candidature.</p>
+    <p class="lead-modal-success" hidden data-i18n="modal.success">Merci ! Le téléchargement démarre…</p>
+    <p class="lead-modal-privacy" data-i18n="modal.privacy">Utilisé uniquement pour vous recontacter au sujet de cette candidature.</p>
   </div>
 </div>
 
 <script>
 (function(){
+  var translations = {
+    'menu.0': { fr:'Accueil', en:'Home' },
+    'menu.1': { fr:'À propos', en:'About' },
+    'menu.2': { fr:'Expertise', en:'Expertise' },
+    'menu.6': { fr:'Projets', en:'Projects' },
+    'menu.7': { fr:'Compétences', en:'Skills' },
+    'hero.eyebrow': { fr:'Marketing digital · Parcours client · Conduite du changement', en:'Digital Marketing · Customer Journey · Change Management' },
+    'hero.headline': { fr:"Je transforme les parcours clients à l'ère du digital.", en:'I turn customer journeys into growth, for the digital age.' },
+    'hero.sub': { fr:"Chargée de Web Marketing formée à la digitalisation des parcours clients (EM Strasbourg), je relie l'acquisition, la donnée et la conduite du changement — au croisement du marketing et de l'IT.", en:'Web Marketing Officer trained in customer journey digitalisation (EM Strasbourg), I connect acquisition, data and change management — where marketing meets IT.' },
+    'hero.cta.projects': { fr:'Voir mes projets', en:'See my projects' },
+    'hero.cta.cv': { fr:'Télécharger mon CV', en:'Download my CV' },
+    'hero.scroll': { fr:'Explorer', en:'Explore' },
+    'stat.leads': { fr:'leads qualifiés / mois', en:'qualified leads / month' },
+    'stat.crm': { fr:'contacts qualifiés CRM', en:'qualified CRM contacts' },
+    'stat.automation': { fr:"gain d'automatisation", en:'automation gain' },
+    'about.eyebrow': { fr:'À propos', en:'About' },
+    'about.title': { fr:'Comprendre un parcours, avant de le transformer', en:'Understand a journey, before transforming it' },
+    'about.p1': { fr:"Tout est parti d'une question que je me pose encore à chaque projet : pourquoi ce client abandonne-t-il ici, précisément ? Cette curiosité m'a menée du terrain chez American Cola à Douala jusqu'aux amphithéâtres de l'EM Strasbourg, où j'ai enchaîné un Master 1 Marketing & Relation Clients puis un Master 2 Digitalisation des Parcours Clients — deux années à disséquer, chiffre après chiffre, ce qui fait qu'un parcours convertit ou échoue.", en:"It all started with a question I still ask on every project: why does this customer drop off exactly here? That curiosity took me from fieldwork at American Cola in Douala to the lecture halls of EM Strasbourg, where I completed a Master's in Marketing & Customer Relations followed by a Master's in Customer Journey Digitalisation — two years spent dissecting, number by number, what makes a journey convert or fail." },
+    'about.p2': { fr:"Chez Lemonway, cette conviction est devenue un métier : piloter un funnel B2B de bout en bout, de la campagne à la conversion, avec la donnée comme boussole. Aujourd'hui, je cherche un premier poste qui prolonge cette trajectoire, à la croisée du marketing et de l'IT.", en:'At Lemonway, that conviction became a craft: running a B2B funnel end to end, from campaign to conversion, with data as my compass. Today, I am looking for a first role that extends this path, where marketing meets IT.' },
+    'about.p3': { fr:"Et parce que ce métier change vite, j'apprends aussi vite : je m'immerge dans l'IA générative et les agents pour rester à la pointe et démultiplier mon impact dès mes premières missions.", en:'And because this field moves fast, I move fast too: I am immersing myself in generative AI and agents to stay ahead of the curve and multiply my impact from my very first missions.' },
+    'tree.apex': { fr:'IA & Agents · Premier poste 2026', en:'AI & Agents · First role 2026' },
+    'tree.trunk1': { fr:'Marketing digital ×', en:'Digital marketing ×' },
+    'tree.trunk2': { fr:'Parcours client', en:'Customer journey' },
+    'piliers.eyebrow': { fr:'Expertise', en:'Expertise' },
+    'piliers.title': { fr:'Trois piliers, une seule conviction', en:'Three pillars, one conviction' },
+    'pilier1.title': { fr:'Marketing digital & acquisition', en:'Digital marketing & acquisition' },
+    'pilier1.desc': { fr:"Google Ads, LinkedIn Ads, SEO/SEA, CRM (Salesforce, Pardot, HubSpot) — piloter un funnel de bout en bout, de la campagne au lead qualifié.", en:'Google Ads, LinkedIn Ads, SEO/SEA, CRM (Salesforce, Pardot, HubSpot) — running a full funnel end to end, from campaign to qualified lead.' },
+    'pilier2.title': { fr:'Digitalisation du parcours client', en:'Customer journey digitalisation' },
+    'pilier2.desc': { fr:'Cartographier un parcours, identifier les frictions, et le repenser avec un double regard marketing et expérience utilisateur.', en:'Mapping a journey, spotting the friction points, and redesigning it with a dual marketing and user-experience lens.' },
+    'pilier3.title': { fr:'Conduite du changement', en:'Change management' },
+    'pilier3.desc': { fr:'Faire adopter un outil ou un process par des équipes non-tech — anticiper les résistances plutôt que les subir.', en:'Getting non-tech teams to adopt a tool or process — anticipating resistance instead of just reacting to it.' },
+    'job.eyebrow': { fr:'Expérience professionnelle', en:'Professional experience' },
+    'job1.role': { fr:'Digital Marketing Officer', en:'Digital Marketing Officer' },
+    'job1.meta': { fr:'Lemonway · Paris', en:'Lemonway · Paris' },
+    'job1.stat2': { fr:'gain vs traitement manuel', en:'gain vs. manual processing' },
+    'job1.stat3': { fr:'contacts qualifiés Salesforce', en:'qualified Salesforce contacts' },
+    'job1.li1': { fr:'Animé la stratégie de contenu B2B bilingue FR/EN — 10 articles de blog, 10+ posts LinkedIn et 20+ contenus web ciblant les prospects', en:'Drove the bilingual FR/EN B2B content strategy — 10 blog articles, 10+ LinkedIn posts and 20+ web pieces targeting prospects' },
+    'job1.li2': { fr:'Piloté 6 campagnes digitales B2B (Google Ads, LinkedIn Ads, emailing) — 90 leads qualifiés (MQL) générés par mois en moyenne', en:'Ran 6 B2B digital campaigns (Google Ads, LinkedIn Ads, emailing) — 90 qualified leads (MQL) generated per month on average' },
+    'job1.li3': { fr:'Automatisé 4 scénarios de nurturing sous Pardot — gain de 40% sur le traitement manuel, conformité RGPD', en:'Automated 4 nurturing workflows in Pardot — 40% gain over manual processing, GDPR-compliant' },
+    'job1.li4': { fr:'Qualifié 8 000 contacts dans Salesforce CRM — réduction de 30% des leads non exploitables sur 3 mois', en:'Qualified 8,000 contacts in Salesforce CRM — cut unusable leads by 30% over 3 months' },
+    'job1.li5': { fr:"Augmenté le taux d'ouverture emailing de 20% via A/B testing et lead scoring comportemental", en:'Increased email open rate by 20% through A/B testing and behavioural lead scoring' },
+    'job1.li6': { fr:'Construit 2 dashboards de suivi acquisition (trafic, conversion, ROI) et coordonné des webinars externes', en:'Built 2 acquisition tracking dashboards (traffic, conversion, ROI) and coordinated external webinars' },
+    'job1.li7': { fr:'Créé la newsletter prospects pour les marketplaces B2B/B2C et la plateforme de crowdfunding', en:'Launched the prospect newsletter for the B2B/B2C marketplaces and the crowdfunding platform' },
+    'job2.role': { fr:'Chargée de Marketing Digital', en:'Digital Marketing Specialist' },
+    'job2.stat1': { fr:'délivrabilité maintenue', en:'delivery rate maintained' },
+    'job2.stat2': { fr:'taux de rebond en moins', en:'lower bounce rate' },
+    'job2.stat3': { fr:'recommandations intégrées', en:'recommendations adopted' },
+    'job2.li1': { fr:'Géré 8 campagnes emailing semestrielles (segmentation CRM, copywriting) — délivrabilité maintenue à 97%', en:'Managed 8 half-yearly email campaigns (CRM segmentation, copywriting) — delivery rate maintained at 97%' },
+    'job2.li2': { fr:"Optimisé 5 parcours d'acquisition (SEO on-page, CTA, arborescence) via GA4 — taux de rebond réduit de 18%", en:'Optimised 5 acquisition journeys (on-page SEO, CTAs, site structure) via GA4 — bounce rate cut by 18%' },
+    'job2.li3': { fr:'Réalisé une analyse concurrentielle de 5 acteurs — 7 recommandations intégrées au plan marketing Q1 2024', en:'Ran a competitive analysis of 5 players — 7 recommendations adopted into the Q1 2024 marketing plan' },
+    'job3.role': { fr:'Assistante Chef de Produit', en:'Product Manager Assistant' },
+    'job3.meta': { fr:'American Cola (Source du Pays) · Douala, Cameroun', en:'American Cola (Source du Pays) · Douala, Cameroon' },
+    'job3.stat1': { fr:'consommateurs interrogés', en:'consumers surveyed' },
+    'job3.stat2': { fr:'concurrents analysés', en:'competitors analysed' },
+    'job3.li1': { fr:'Réalisé une étude de marché sur 120 consommateurs et une veille de 6 concurrents — cahier des charges livré pour le lancement produit', en:'Conducted a market study of 120 consumers and monitored 6 competitors — delivered the brief for the product launch' },
+    'job3.li2': { fr:'Analysé les données de performance post-lancement (ventes, parts de marché, retours terrain) — rapport mensuel formalisé', en:'Analysed post-launch performance data (sales, market share, field feedback) — produced a formal monthly report' },
+    'projets.eyebrow': { fr:'Études de cas', en:'Case studies' },
+    'projets.title': { fr:'Des projets, pas des promesses', en:'Projects, not promises' },
+    'proj1.tag': { fr:'Audit UX & marketing', en:'UX & marketing audit' },
+    'proj1.title': { fr:'Parcours de souscription — BNP Paribas', en:'Subscription journey — BNP Paribas' },
+    'proj1.desc': { fr:"Le tunnel de souscription en ligne perdait des clients à chaque étape. J'ai disséqué le parcours, isolé les frictions critiques et livré un plan d'action concret — jusqu'à la conduite du changement pour le faire adopter en interne.", en:'The online subscription funnel was losing customers at every step. I dissected the journey, isolated the critical friction points and delivered a concrete action plan — including the change management to get it adopted internally.' },
+    'proj1.btn': { fr:"Télécharger l'étude", en:'Download the study' },
+    'proj2.tag': { fr:'Audit SEO · 2025', en:'SEO audit · 2025' },
+    'proj2.title': { fr:'Audit SEO complet — Mustela', en:'Full SEO audit — Mustela' },
+    'proj2.desc': { fr:"56 pages d'audit sur mustela.fr : j'ai passé le site Shopify au crible — technique, sémantique, netlinking, EEAT — et livré des recommandations concrètes pour regagner en visibilité sur Google. Un audit du même type a aussi été mené pour Club Med.", en:'A 56-page audit of mustela.fr: I went through the Shopify site with a fine-tooth comb — technical, semantic, netlinking, EEAT — and delivered concrete recommendations to regain visibility on Google. A similar audit was also carried out for Club Med.' },
+    'proj2.btn': { fr:"Télécharger l'audit", en:'Download the audit' },
+    'proj3.tag': { fr:'Data & pilotage', en:'Data & tracking' },
+    'proj3.title': { fr:'Dashboard de pilotage — Power BI', en:'Tracking dashboard — Power BI' },
+    'proj3.desc': { fr:"Le funnel de souscription enfin lisible en un coup d'œil : conversion par canal, point de friction critique identifié, pilotage data en temps réel.", en:'The subscription funnel finally readable at a glance: conversion by channel, critical friction point identified, real-time data tracking.' },
+    'proj3.btn': { fr:'Voir le dashboard', en:'View the dashboard' },
+    'proj4.tag': { fr:'Conduite du changement', en:'Change management' },
+    'proj4.title': { fr:"Adoption d'un assistant IA — Lemonway", en:'AI assistant adoption — Lemonway' },
+    'proj4.desc': { fr:"Comment faire adopter l'IA à des équipes qui s'en méfient ? Un plan concret : résistances anticipées, formation terrain, garde-fous réglementaires.", en:'How do you get teams who distrust AI to adopt it? A concrete plan: anticipated resistance, hands-on training, regulatory guardrails.' },
+    'proj4.btn': { fr:'Télécharger la note', en:'Download the brief' },
+    'proj5.badge': { fr:'En cours', en:'In progress' },
+    'proj5.title': { fr:"Pilotage d'une campagne bancaire — Kaggle", en:'Tracking a banking campaign — Kaggle' },
+    'proj5.desc': { fr:'Un dataset bancaire brut, du bruit partout : je nettoie, je feature-engineer, direction un dashboard de ciblage prêt à guider la prochaine campagne.', en:'A raw banking dataset, noise everywhere: I clean it, feature-engineer it, heading toward a targeting dashboard ready to guide the next campaign.' },
+    'proj5.btn': { fr:'Voir le script', en:'View the script' },
+    'comp.eyebrow': { fr:'Compétences', en:'Skills' },
+    'comp.title': { fr:'La boîte à outils', en:'The toolkit' },
+    'tag.content': { fr:'Content Marketing B2B', en:'B2B Content Marketing' },
+    'tag.copywriting': { fr:'Copywriting FR/EN', en:'Copywriting FR/EN' },
+    'group.tools': { fr:'Outils & productivité', en:'Tools & productivity' },
+    'badge.learning': { fr:'En apprentissage', en:'Currently learning' },
+    'group.languages': { fr:'Langues', en:'Languages' },
+    'lang.fr': { fr:'Français', en:'French' },
+    'lang.en': { fr:'Anglais', en:'English' },
+    'lang.es': { fr:'Espagnol', en:'Spanish' },
+    'group.qualities': { fr:'Qualités humaines', en:'Soft skills' },
+    'q.rigueur': { fr:'Rigueur', en:'Rigor' },
+    'q.autonomie': { fr:'Autonomie', en:'Autonomy' },
+    'q.equipe': { fr:"Esprit d'équipe", en:'Team spirit' },
+    'q.curiosite': { fr:'Curiosité', en:'Curiosity' },
+    'q.proposition': { fr:'Force de proposition', en:'Proactivity' },
+    'contact.title': { fr:'Discutons de mon prochain poste', en:'Let’s talk about my next role' },
+    'contact.role': { fr:'Marketing digital · Parcours client', en:'Digital Marketing · Customer Journey' },
+    'contact.pitch': { fr:"Ce portfolio montre ce que j'ai accompli ; c'est en échangeant que je peux vous montrer ce que je peux apporter. Si mon profil retient votre attention, j'aimerais beaucoup qu'on en discute de vive voix — au-delà du CV ci-joint, pour construire ensemble les contours d'une future collaboration.", en:"This portfolio shows what I've done; a conversation would show what I can bring to your team. If my profile catches your interest, I'd love to talk it through — beyond the attached CV, to shape together what a future collaboration could look like." },
+    'contact.sub': { fr:"Disponible pour un premier emploi à partir de 2026 en marketing digital (profil pont marketing × IT), mobile Paris / Île-de-France et Bruxelles. Actuellement en veille active sur l'IA générative et les agents pour renforcer mon impact.", en:'Available for a first role from 2026 in digital marketing (a profile bridging marketing and IT), based in Paris / Île-de-France, open to relocating to Brussels. Currently keeping a close watch on generative AI and agents to sharpen my impact.' },
+    'contact.cv': { fr:'Télécharger le CV', en:'Download CV' },
+    'contact.footer': { fr:'Daryne Voufo — Marketing digital & transformation des parcours clients · 2026', en:'Daryne Voufo — Digital marketing & customer journey transformation · 2026' },
+    'modal.eyebrow': { fr:'Accès au document', en:'Document access' },
+    'modal.title': { fr:'Un dernier pas avant le téléchargement', en:'One last step before downloading' },
+    'modal.name': { fr:'Nom', en:'Name' },
+    'modal.submit': { fr:'Télécharger le document', en:'Download the document' },
+    'modal.success': { fr:'Merci ! Le téléchargement démarre…', en:'Thank you! Your download is starting…' },
+    'modal.privacy': { fr:'Utilisé uniquement pour vous recontacter au sujet de cette candidature.', en:'Used only to follow up with you about this application.' }
+  };
+
+  var currentLang = localStorage.getItem('lang') || 'fr';
+
+  function applyLanguage(lang){
+    currentLang = lang;
+    document.documentElement.lang = lang;
+    localStorage.setItem('lang', lang);
+    document.querySelectorAll('[data-i18n]').forEach(function(el){
+      var entry = translations[el.getAttribute('data-i18n')];
+      if(entry) el.textContent = entry[lang] || entry.fr;
+    });
+    document.querySelectorAll('.side-dot').forEach(function(dot){
+      var v = lang === 'en' ? dot.getAttribute('data-label-en') : dot.getAttribute('data-label-fr');
+      if(v) dot.setAttribute('data-label', v);
+    });
+    document.querySelectorAll('.lang-opt').forEach(function(opt){
+      opt.classList.toggle('active', opt.getAttribute('data-lang-opt') === lang);
+    });
+    document.querySelector('.lead-modal-doc').textContent = '';
+  }
+
+  var langToggle = document.getElementById('langToggle');
+  langToggle.addEventListener('click', function(){
+    applyLanguage(currentLang === 'fr' ? 'en' : 'fr');
+  });
+
   var slides = Array.from(document.querySelectorAll('.slide'));
   var total = slides.length;
   var current = 0;
@@ -681,7 +822,7 @@
   function openLeadModal(doc, docName){
     pendingDoc = doc;
     pendingDocName = docName;
-    leadDocLabel.textContent = 'Document : ' + docName;
+    leadDocLabel.textContent = (currentLang === 'en' ? 'Document: ' : 'Document : ') + docName;
     leadForm.hidden = false;
     leadSuccess.hidden = true;
     leadForm.reset();
@@ -718,10 +859,12 @@
   }
 
   document.addEventListener('click', function(e){
-    var doc = e.target.closest('[data-doc]');
+    var doc = e.target.closest('[data-doc-fr]');
     if(doc){
       e.preventDefault();
-      openLeadModal(doc.getAttribute('data-doc'), doc.getAttribute('data-doc-name'));
+      var file = currentLang === 'en' ? doc.getAttribute('data-doc-en') : doc.getAttribute('data-doc-fr');
+      var name = currentLang === 'en' ? doc.getAttribute('data-name-en') : doc.getAttribute('data-name-fr');
+      openLeadModal(file, name);
       return;
     }
     if(e.target.closest('[data-modal-close]')){
@@ -824,6 +967,7 @@
 
   updateNav();
   triggerCounters(slides[0]);
+  applyLanguage(currentLang);
 })();
 </script>
 
