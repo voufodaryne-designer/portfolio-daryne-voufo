@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Pilotage du parcours de souscription — BNP Paribas</title>
+<style>
+  :root{
+    --navy:#12283F; --navy-light:#1E3A56; --ink:#16202B; --muted:#6B7280;
+    --bg:#EEF1F5; --card:#FFFFFF; --border:#E2E6EB;
+    --green:#1F9D77; --green-bg:#E5F5EF;
+    --red:#D64545; --red-bg:#FBEAEA;
+    --amber:#C98F1E; --amber-bg:#FBF2E1;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Arial,sans-serif;background:var(--bg);color:var(--ink);}
+  .wrap{max-width:1180px;margin:0 auto;padding:28px 32px 60px;}
+  .topbar{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px;margin-bottom:24px;}
+  .topbar h1{font-size:21px;margin:0 0 4px;color:var(--navy);font-weight:700;}
+  .topbar p{margin:0;color:var(--muted);font-size:13px;}
+  .filters{display:flex;gap:8px;}
+  .filter-btn{border:1px solid var(--border);background:var(--card);color:var(--ink);padding:7px 14px;border-radius:6px;font-size:13px;cursor:pointer;font-weight:600;transition:all .15s;}
+  .filter-btn.active{background:var(--navy);border-color:var(--navy);color:#fff;}
+  .kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px;}
+  .kpi{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px 18px;}
+  .kpi .label{font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.03em;margin-bottom:8px;}
+  .kpi .value{font-size:26px;font-weight:700;color:var(--navy);}
+  .kpi .sub{font-size:12px;color:var(--muted);margin-top:4px;}
+  .kpi.alert .value{color:var(--red);}
+  .panels{display:grid;grid-template-columns:1.15fr 0.85fr;gap:16px;margin-bottom:16px;}
+  .panel{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:18px 20px;}
+  .panel h2{font-size:14px;margin:0 0 4px;color:var(--navy);font-weight:700;}
+  .panel .desc{font-size:12px;color:var(--muted);margin:0 0 16px;}
+  .funnel-step{margin-bottom:6px;}
+  .funnel-bar-row{display:flex;align-items:center;gap:10px;}
+  .funnel-label{width:200px;font-size:12.5px;color:var(--ink);font-weight:600;flex-shrink:0;}
+  .funnel-track{flex:1;background:#F1F3F6;border-radius:5px;height:26px;position:relative;overflow:hidden;}
+  .funnel-fill{height:100%;background:var(--navy-light);border-radius:5px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;transition:width .4s;}
+  .funnel-fill span{color:#fff;font-size:11.5px;font-weight:700;}
+  .funnel-fill.friction{background:var(--red);}
+  .funnel-drop{font-size:11px;color:var(--red);font-weight:700;margin:2px 0 2px 210px;}
+  .funnel-drop.ok{color:var(--muted);font-weight:600;}
+  table.channel-table{width:100%;border-collapse:collapse;font-size:12.5px;}
+  table.channel-table th{text-align:left;color:var(--muted);font-weight:600;padding:6px 4px;border-bottom:1px solid var(--border);font-size:11.5px;text-transform:uppercase;letter-spacing:.02em;}
+  table.channel-table td{padding:7px 4px;border-bottom:1px solid var(--border);}
+  table.channel-table tr:last-child td{border-bottom:none;font-weight:700;}
+  .badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700;}
+  .badge.friction{background:var(--red-bg);color:var(--red);}
+  .footnote{font-size:11.5px;color:var(--muted);margin-top:14px;line-height:1.5;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <div>
+      <h1>Pilotage du parcours de souscription — Carte bancaire BNP Paribas</h1>
+      <p>Offre Esprit Libre · Janvier – Juin 2026 · Données simulées pour étude de cas portfolio</p>
+    </div>
+    <div class="filters" id="filters">
+      <button class="filter-btn active" data-channel="Global">Global</button>
+      <button class="filter-btn" data-channel="Web">Web</button>
+      <button class="filter-btn" data-channel="App mobile">App mobile</button>
+    </div>
+  </div>
+
+  <div class="kpi-row" id="kpiRow"></div>
+
+  <div class="panels">
+    <div class="panel">
+      <h2>Funnel de souscription</h2>
+      <p class="desc">Volume d'utilisateurs par étape, sur la période sélectionnée</p>
+      <div id="funnelContainer"></div>
+      <div class="footnote">Étape en rouge = point de friction le plus fort du parcours, identifié dans l'audit UX (vérification des revenus / documents).</div>
+    </div>
+    <div class="panel">
+      <h2>Évolution du taux de conversion global</h2>
+      <p class="desc">De la visite de l'offre à la carte activée, par mois</p>
+      <div style="position:relative;height:230px;">
+        <canvas id="trendChart" role="img" aria-label="Évolution mensuelle du taux de conversion global du parcours de souscription">Taux de conversion en hausse progressive de janvier à juin 2026.</canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>Comparatif par canal</h2>
+    <p class="desc">Performance cumulée sur les 6 mois</p>
+    <table class="channel-table" id="channelTable"></table>
+  </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const DATA = [{"Month": "2026-01", "Channel": "Web", "StepOrder": 1, "StepName": "Visite offre Esprit Libre", "Users": 5200}, {"Month": "2026-01", "Channel": "Web", "StepOrder": 2, "StepName": "D\u00e9marrage souscription", "Users": 3744}, {"Month": "2026-01", "Channel": "Web", "StepOrder": 3, "StepName": "V\u00e9rification identit\u00e9", "Users": 3070}, {"Month": "2026-01", "Channel": "Web", "StepOrder": 4, "StepName": "V\u00e9rification revenus/documents", "Users": 1995}, {"Month": "2026-01", "Channel": "Web", "StepOrder": 5, "StepName": "Validation finale", "Users": 1795}, {"Month": "2026-01", "Channel": "Web", "StepOrder": 6, "StepName": "Carte activ\u00e9e", "Users": 1688}, {"Month": "2026-01", "Channel": "App mobile", "StepOrder": 1, "StepName": "Visite offre Esprit Libre", "Users": 3400}, {"Month": "2026-01", "Channel": "App mobile", "StepOrder": 2, "StepName": "D\u00e9marrage souscription", "Users": 2448}, {"Month": "2026-01", "Channel": "App mobile", "StepOrder": 3, "StepName": "V\u00e9rification identit\u00e9", "Users": 2007}, {"Month": "2026-01", "Channel": "App mobile", "StepOrder": 4, "StepName": "V\u00e9rification revenus/documents", "Users": 1304}, {"Month": "2026-01", "Channel": "App mobile", "StepOrder": 5, "StepName": "Validation finale", "Users": 1174}, {"Month": "2026-01", "Channel": "App mobile", "StepOrder": 6, "StepName": "Carte activ\u00e9e", "Users": 1103}, {"Month": "2026-02", "Channel": "Web", "StepOrder": 1, "StepName": "Visite offre Esprit Libre", "Users": 5408}, {"Month": "2026-02", "Channel": "Web", "StepOrder": 2, "StepName": "D\u00e9marrage souscription", "Users": 3893}, {"Month": "2026-02", "Channel": "Web", "StepOrder": 3, "StepName": "V\u00e9rification identit\u00e9", "Users": 3192}, {"Month": "2026-02", "Channel": "Web", "StepOrder": 4, "StepName": "V\u00e9rification revenus/documents", "Users": 2075}, {"Month": "2026-02", "Channel": "Web", "StepOrder": 5, "StepName": "Validation finale", "Users": 1867}, {"Month": "2026-02", "Channel": "Web", "StepOrder": 6, "StepName": "Carte activ\u00e9e", "Users": 1755}, {"Month": "2026-02", "Channel": "App mobile", "StepOrder": 1, "StepName": "Visite offre Esprit Libre", "Users": 3536}, {"Month": "2026-02", "Channel": "App mobile", "StepOrder": 2, "StepName": "D\u00e9marrage souscription", "Users": 2545}, {"Month": "2026-02", "Channel": "App mobile", "StepOrder": 3, "StepName": "V\u00e9rification identit\u00e9", "Users": 2087}, {"Month": "2026-02", "Channel": "App mobile", "StepOrder": 4, "StepName": "V\u00e9rification revenus/documents", "Users": 1356}, {"Month": "2026-02", "Channel": "App mobile", "StepOrder": 5, "StepName": "Validation finale", "Users": 1221}, {"Month": "2026-02", "Channel": "App mobile", "StepOrder": 6, "StepName": "Carte activ\u00e9e", "Users": 1148}, {"Month": "2026-03", "Channel": "Web", "StepOrder": 1, "StepName": "Visite offre Esprit Libre", "Users": 5616}, {"Month": "2026-03", "Channel": "Web", "StepOrder": 2, "StepName": "D\u00e9marrage souscription", "Users": 4043}, {"Month": "2026-03", "Channel": "Web", "StepOrder": 3, "StepName": "V\u00e9rification identit\u00e9", "Users": 3315}, {"Month": "2026-03", "Channel": "Web", "StepOrder": 4, "StepName": "V\u00e9rification revenus/documents", "Users": 2155}, {"Month": "2026-03", "Channel": "Web", "StepOrder": 5, "StepName": "Validation finale", "Users": 1939}, {"Month": "2026-03", "Channel": "Web", "StepOrder": 6, "StepName": "Carte activ\u00e9e", "Users": 1823}, {"Month": "2026-03", "Channel": "App mobile", "StepOrder": 1, "StepName": "Visite offre Esprit Libre", "Users": 3672}, {"Month": "2026-03", "Channel": "App mobile", "StepOrder": 2, "StepName": "D\u00e9marrage souscription", "Users": 2643}, {"Month": "2026-03", "Channel": "App mobile", "StepOrder": 3, "StepName": "V\u00e9rification identit\u00e9", "Users": 2167}, {"Month": "2026-03", "Channel": "App mobile", "StepOrder": 4, "StepName": "V\u00e9rification revenus/documents", "Users": 1409}, {"Month": "2026-03", "Channel": "App mobile", "StepOrder": 5, "StepName": "Validation finale", "Users": 1268}, {"Month": "2026-03", "Channel": "App mobile", "StepOrder": 6, "StepName": "Carte activ\u00e9e", "Users": 1192}, {"Month": "2026-04", "Channel": "Web", "StepOrder": 1, "StepName": "Visite offre Esprit Libre", "Users": 5824}, {"Month": "2026-04", "Channel": "Web", "StepOrder": 2, "StepName": "D\u00e9marrage souscription", "Users": 4193}, {"Month": "2026-04", "Channel": "Web", "StepOrder": 3, "StepName": "V\u00e9rification identit\u00e9", "Users": 3438}, {"Month": "2026-04", "Channel": "Web", "StepOrder": 4, "StepName": "V\u00e9rification revenus/documents", "Users": 2235}, {"Month": "2026-04", "Channel": "Web", "StepOrder": 5, "StepName": "Validation finale", "Users": 2011}, {"Month": "2026-04", "Channel": "Web", "StepOrder": 6, "StepName": "Carte activ\u00e9e", "Users": 1890}, {"Month": "2026-04", "Channel": "App mobile", "StepOrder": 1, "StepName": "Visite offre Esprit Libre", "Users": 3808}, {"Month": "2026-04", "Channel": "App mobile", "StepOrder": 2, "StepName": "D\u00e9marrage souscription", "Users": 2741}, {"Month": "2026-04", "Channel": "App mobile", "StepOrder": 3, "StepName": "V\u00e9rification identit\u00e9", "Users": 2248}, {"Month": "2026-04", "Channel": "App mobile", "StepOrder": 4, "StepName": "V\u00e9rification revenus/documents", "Users": 1461}, {"Month": "2026-04", "Channel": "App mobile", "StepOrder": 5, "StepName": "Validation finale", "Users": 1315}, {"Month": "2026-04", "Channel": "App mobile", "StepOrder": 6, "StepName": "Carte activ\u00e9e", "Users": 1236}, {"Month": "2026-05", "Channel": "Web", "StepOrder": 1, "StepName": "Visite offre Esprit Libre", "Users": 6032}, {"Month": "2026-05", "Channel": "Web", "StepOrder": 2, "StepName": "D\u00e9marrage souscription", "Users": 4343}, {"Month": "2026-05", "Channel": "Web", "StepOrder": 3, "StepName": "V\u00e9rification identit\u00e9", "Users": 3561}, {"Month": "2026-05", "Channel": "Web", "StepOrder": 4, "StepName": "V\u00e9rification revenus/documents", "Users": 2314}, {"Month": "2026-05", "Channel": "Web", "StepOrder": 5, "StepName": "Validation finale", "Users": 2083}, {"Month": "2026-05", "Channel": "Web", "StepOrder": 6, "StepName": "Carte activ\u00e9e", "Users": 1958}, {"Month": "2026-05", "Channel": "App mobile", "StepOrder": 1, "StepName": "Visite offre Esprit Libre", "Users": 3943}, {"Month": "2026-05", "Channel": "App mobile", "StepOrder": 2, "StepName": "D\u00e9marrage souscription", "Users": 2838}, {"Month": "2026-05", "Channel": "App mobile", "StepOrder": 3, "StepName": "V\u00e9rification identit\u00e9", "Users": 2327}, {"Month": "2026-05", "Channel": "App mobile", "StepOrder": 4, "StepName": "V\u00e9rification revenus/documents", "Users": 1513}, {"Month": "2026-05", "Channel": "App mobile", "StepOrder": 5, "StepName": "Validation finale", "Users": 1361}, {"Month": "2026-05", "Channel": "App mobile", "StepOrder": 6, "StepName": "Carte activ\u00e9e", "Users": 1280}, {"Month": "2026-06", "Channel": "Web", "StepOrder": 1, "StepName": "Visite offre Esprit Libre", "Users": 6240}, {"Month": "2026-06", "Channel": "Web", "StepOrder": 2, "StepName": "D\u00e9marrage souscription", "Users": 4492}, {"Month": "2026-06", "Channel": "Web", "StepOrder": 3, "StepName": "V\u00e9rification identit\u00e9", "Users": 3684}, {"Month": "2026-06", "Channel": "Web", "StepOrder": 4, "StepName": "V\u00e9rification revenus/documents", "Users": 2394}, {"Month": "2026-06", "Channel": "Web", "StepOrder": 5, "StepName": "Validation finale", "Users": 2155}, {"Month": "2026-06", "Channel": "Web", "StepOrder": 6, "StepName": "Carte activ\u00e9e", "Users": 2025}, {"Month": "2026-06", "Channel": "App mobile", "StepOrder": 1, "StepName": "Visite offre Esprit Libre", "Users": 4080}, {"Month": "2026-06", "Channel": "App mobile", "StepOrder": 2, "StepName": "D\u00e9marrage souscription", "Users": 2937}, {"Month": "2026-06", "Channel": "App mobile", "StepOrder": 3, "StepName": "V\u00e9rification identit\u00e9", "Users": 2408}, {"Month": "2026-06", "Channel": "App mobile", "StepOrder": 4, "StepName": "V\u00e9rification revenus/documents", "Users": 1565}, {"Month": "2026-06", "Channel": "App mobile", "StepOrder": 5, "StepName": "Validation finale", "Users": 1409}, {"Month": "2026-06", "Channel": "App mobile", "StepOrder": 6, "StepName": "Carte activ\u00e9e", "Users": 1324}];
+
+const STEP_NAMES = ["Visite offre Esprit Libre","Démarrage souscription","Vérification identité","Vérification revenus/documents","Validation finale","Carte activée"];
+const FRICTION_STEP = 4;
+const months = [...new Set(DATA.map(d => d.Month))].sort();
+const channels = ["Web","App mobile"];
+
+function fmt(n){ return Math.round(n).toLocaleString('fr-FR'); }
+function pct(n){ return (Math.round(n*10)/10).toLocaleString('fr-FR') + '%'; }
+
+function aggregate(channelFilter){
+  const byStep = {};
+  for(let s=1;s<=6;s++) byStep[s]=0;
+  DATA.forEach(d=>{
+    if(channelFilter==='Global' || d.Channel===channelFilter){
+      byStep[d.StepOrder]+=d.Users;
+    }
+  });
+  return byStep;
+}
+
+function monthlyConversion(channelFilter){
+  return months.map(m=>{
+    let start=0, end=0;
+    DATA.forEach(d=>{
+      if(d.Month===m && (channelFilter==='Global' || d.Channel===channelFilter)){
+        if(d.StepOrder===1) start+=d.Users;
+        if(d.StepOrder===6) end+=d.Users;
+      }
+    });
+    return start ? (end/start*100) : 0;
+  });
+}
+
+let chartInstance=null;
+
+function render(channelFilter){
+  const byStep = aggregate(channelFilter);
+  const totalVisits = byStep[1];
+  const totalActivated = byStep[6];
+  const globalConv = totalVisits ? (totalActivated/totalVisits*100) : 0;
+
+  let worstDrop = {step:0, rate:0};
+  for(let s=1;s<6;s++){
+    const rate = byStep[s] ? (1 - byStep[s+1]/byStep[s])*100 : 0;
+    if(rate>worstDrop.rate) worstDrop={step:s, rate};
+  }
+
+  const webByStep = aggregate('Web');
+  const appByStep = aggregate('App mobile');
+  const webConv = webByStep[1] ? (webByStep[6]/webByStep[1]*100) : 0;
+  const appConv = appByStep[1] ? (appByStep[6]/appByStep[1]*100) : 0;
+  const bestChannel = webConv >= appConv ? 'Web' : 'App mobile';
+  const bestConv = Math.max(webConv, appConv);
+
+  document.getElementById('kpiRow').innerHTML = `
+    <div class="kpi">
+      <div class="label">Taux de conversion global</div>
+      <div class="value">${pct(globalConv)}</div>
+      <div class="sub">Visite → carte activée</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Volume de visites</div>
+      <div class="value">${fmt(totalVisits)}</div>
+      <div class="sub">Sur la période sélectionnée</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Meilleur canal</div>
+      <div class="value">${bestChannel}</div>
+      <div class="sub">${pct(bestConv)} de conversion</div>
+    </div>
+    <div class="kpi alert">
+      <div class="label">Point de friction critique</div>
+      <div class="value">${pct(worstDrop.rate)}</div>
+      <div class="sub">${STEP_NAMES[worstDrop.step-1]} → ${STEP_NAMES[worstDrop.step]}</div>
+    </div>
+  `;
+
+  let funnelHtml='';
+  for(let s=1;s<=6;s++){
+    const val = byStep[s];
+    const widthPct = totalVisits ? (val/totalVisits*100) : 0;
+    const isFriction = s===FRICTION_STEP;
+    funnelHtml += `
+      <div class="funnel-step">
+        <div class="funnel-bar-row">
+          <div class="funnel-label">${STEP_NAMES[s-1]}</div>
+          <div class="funnel-track">
+            <div class="funnel-fill ${isFriction?'friction':''}" style="width:${Math.max(widthPct,4)}%">
+              <span>${fmt(val)}</span>
+            </div>
+          </div>
+        </div>
+      </div>`;
+    if(s<6){
+      const dropRate = byStep[s] ? (1 - byStep[s+1]/byStep[s])*100 : 0;
+      const isBad = dropRate>25;
+      funnelHtml += `<div class="funnel-drop ${isBad?'':'ok'}">${isBad?'▼':'–'} ${pct(dropRate)} d'abandon à cette étape</div>`;
+    }
+  }
+  document.getElementById('funnelContainer').innerHTML = funnelHtml;
+
+  const convData = monthlyConversion(channelFilter);
+  const ctx = document.getElementById('trendChart');
+  if(chartInstance) chartInstance.destroy();
+  chartInstance = new Chart(ctx, {
+    type:'line',
+    data:{
+      labels: months.map(m=>{
+        const [y,mo]=m.split('-');
+        return ['Jan','Fév','Mar','Avr','Mai','Juin'][parseInt(mo)-1];
+      }),
+      datasets:[{
+        label:'Taux de conversion',
+        data: convData.map(v=>Math.round(v*10)/10),
+        borderColor:'#12283F',
+        backgroundColor:'rgba(18,40,63,0.08)',
+        borderWidth:2,
+        fill:true,
+        tension:0.3,
+        pointBackgroundColor:'#12283F',
+        pointRadius:4,
+      }]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{display:false} },
+      scales:{
+        y:{ beginAtZero:true, ticks:{ callback:(v)=>v+'%' }, grid:{color:'#E2E6EB'} },
+        x:{ grid:{display:false} }
+      }
+    }
+  });
+
+  document.getElementById('channelTable').innerHTML = `
+    <tr><th>Canal</th><th>Visites</th><th>Cartes activées</th><th>Taux de conversion</th></tr>
+    <tr><td>Web</td><td>${fmt(webByStep[1])}</td><td>${fmt(webByStep[6])}</td><td>${pct(webConv)}</td></tr>
+    <tr><td>App mobile</td><td>${fmt(appByStep[1])}</td><td>${fmt(appByStep[6])}</td><td>${pct(appConv)}</td></tr>
+    <tr><td>Total</td><td>${fmt(webByStep[1]+appByStep[1])}</td><td>${fmt(webByStep[6]+appByStep[6])}</td><td>${pct((webByStep[6]+appByStep[6])/(webByStep[1]+appByStep[1])*100)}</td></tr>
+  `;
+}
+
+document.getElementById('filters').addEventListener('click', (e)=>{
+  if(e.target.classList.contains('filter-btn')){
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+    e.target.classList.add('active');
+    render(e.target.dataset.channel);
+  }
+});
+
+render('Global');
+</script>
+</body>
+</html>
