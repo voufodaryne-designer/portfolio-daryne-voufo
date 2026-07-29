@@ -566,13 +566,18 @@
     <p class="eyebrow" style="margin-bottom:8px;">Accès au document</p>
     <h3 id="leadModalTitle" class="lead-modal-title">Un dernier pas avant le téléchargement</h3>
     <p class="lead-modal-doc"></p>
-    <form id="leadForm" novalidate>
+    <form id="leadForm" name="leadForm" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+      <input type="hidden" name="form-name" value="leadForm">
+      <p style="position:absolute; left:-9999px;" aria-hidden="true">
+        <label>Ne pas remplir : <input name="bot-field" tabindex="-1" autocomplete="off"></label>
+      </p>
       <label>Nom
         <input type="text" name="name" required autocomplete="name">
       </label>
       <label>Email
         <input type="email" name="email" required autocomplete="email">
       </label>
+      <input type="hidden" name="document" value="">
       <button type="submit" class="btn btn-primary lead-submit">Télécharger le document</button>
     </form>
     <p class="lead-modal-success" hidden>Merci ! Le téléchargement démarre…</p>
@@ -653,6 +658,7 @@
     leadForm.hidden = false;
     leadSuccess.hidden = true;
     leadForm.reset();
+    leadForm.document.value = docName;
     leadModal.classList.add('open');
     leadModal.setAttribute('aria-hidden', 'false');
     setTimeout(function(){ leadForm.name.focus(); }, 300);
@@ -672,10 +678,16 @@
     a.remove();
   }
 
-  // TODO: brancher ici l'enregistrement réel du contact (hébergement + stockage à confirmer)
+  // Enregistrement du contact via Netlify Forms (actif une fois le site déployé sur Netlify)
   function sendLead(name, email, docName){
-    console.log('Lead captured (pas encore relié à un stockage) :', name, email, docName);
-    return Promise.resolve();
+    var body = new URLSearchParams({ 'form-name': 'leadForm', name: name, email: email, document: docName }).toString();
+    return fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: body
+    }).catch(function(err){
+      console.warn('Envoi du contact impossible (site non déployé sur Netlify ?)', err);
+    });
   }
 
   document.addEventListener('click', function(e){
