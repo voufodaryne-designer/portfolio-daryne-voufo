@@ -34,14 +34,22 @@
     50%{transform:translate(50px,-36px) scale(1.08);}
   }
 
-  /* TOPBAR */
-  header.topbar{position:fixed; top:0; left:0; right:0; z-index:30; display:flex; align-items:center; justify-content:space-between; padding:16px 28px; transition:color .35s ease;}
-  .logo{display:flex; align-items:center; gap:10px; text-decoration:none; cursor:pointer;}
-  .logo-mark{width:34px; height:34px; flex-shrink:0;}
+  /* TOPBAR + MAIN NAV */
+  header.topbar{position:fixed; top:0; left:0; right:0; z-index:30; display:flex; align-items:center; justify-content:space-between; gap:16px; padding:14px 28px; transition:color .35s ease; flex-wrap:wrap; row-gap:8px;}
+  .logo{display:flex; align-items:center; gap:10px; text-decoration:none; cursor:pointer; flex:0 0 auto;}
+  .logo-mark{width:32px; height:32px; flex-shrink:0;}
   .logo-mark circle.ring{fill:none; stroke:var(--navy); stroke-width:2.4;}
   .logo-mark text{font-family:var(--serif); font-weight:600; fill:var(--gold);}
-  .logo-name{font-family:var(--serif); font-weight:600; font-size:16.5px; color:var(--navy); letter-spacing:.01em;}
-  .topbar-actions{display:flex; align-items:center; gap:12px;}
+  .logo-name{font-family:var(--serif); font-weight:600; font-size:16px; color:var(--navy); letter-spacing:.01em;}
+  .main-nav{display:flex; align-items:center; gap:22px; flex:1 1 auto; justify-content:center; overflow-x:auto; scrollbar-width:none; -ms-overflow-style:none;}
+  .main-nav::-webkit-scrollbar{display:none;}
+  .main-nav a{font-size:13px; font-weight:600; color:var(--muted); white-space:nowrap; cursor:pointer; position:relative; padding:4px 1px; transition:color .2s ease;}
+  .main-nav a:hover{color:var(--navy);}
+  .main-nav a.active{color:var(--navy);}
+  .main-nav a.active::after{content:""; position:absolute; left:0; right:0; bottom:-6px; height:2px; background:var(--gold); border-radius:2px;}
+  header.topbar.on-dark .main-nav a{color:#C7D2E0;}
+  header.topbar.on-dark .main-nav a:hover, header.topbar.on-dark .main-nav a.active{color:#fff;}
+  .topbar-actions{display:flex; align-items:center; gap:10px; flex:0 0 auto;}
   .btn{display:inline-flex; align-items:center; gap:8px; padding:10px 20px; border-radius:6px; font-size:14px; font-weight:600; text-decoration:none; border:1.5px solid transparent; cursor:pointer; transition:all .15s;}
   .btn-primary{background:var(--navy); color:#fff;}
   .btn-primary:hover{background:var(--navy-2); transform:translateY(-1px);}
@@ -56,32 +64,15 @@
   header.topbar.on-dark .lang-toggle .lang-opt{color:#C7D2E0;}
   header.topbar.on-dark .lang-toggle .lang-opt.active{background:#fff; color:var(--navy);}
 
-  .menu-toggle{width:38px; height:38px; border:1px solid var(--border); border-radius:8px; background:var(--surface); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;}
-  .menu-toggle span{width:16px; height:2px; background:var(--navy); border-radius:2px; transition:transform .25s ease, opacity .25s ease;}
-  body.menu-open .menu-toggle span:nth-child(1){transform:translateY(6px) rotate(45deg);}
-  body.menu-open .menu-toggle span:nth-child(2){opacity:0;}
-  body.menu-open .menu-toggle span:nth-child(3){transform:translateY(-6px) rotate(-45deg);}
-
   header.topbar.on-dark .logo-name{color:#fff;}
   header.topbar.on-dark .logo-mark circle.ring{stroke:#fff;}
   header.topbar.on-dark .btn-outline{border-color:#fff; color:#fff;}
-  header.topbar.on-dark .menu-toggle{background:rgba(255,255,255,0.1); border-color:rgba(255,255,255,0.3);}
-  header.topbar.on-dark .menu-toggle span{background:#fff;}
-
-  /* SLIDE MENU OVERLAY */
-  .slide-menu{position:fixed; inset:0; z-index:40; background:var(--navy-3); display:flex; align-items:center; justify-content:center; opacity:0; visibility:hidden; transition:opacity .35s ease, visibility .35s ease;}
-  body.menu-open .slide-menu{opacity:1; visibility:visible;}
-  .slide-menu ul{list-style:none; text-align:center;}
-  .slide-menu li{margin:14px 0;}
-  .slide-menu a{font-family:var(--serif); font-size:clamp(22px,4vw,34px); color:#C7D2E0; text-decoration:none; font-weight:500; transition:color .2s ease;}
-  .slide-menu a:hover{color:var(--gold);}
-  .menu-close{position:absolute; top:22px; right:28px; width:40px; height:40px; border-radius:50%; border:1px solid rgba(255,255,255,.3); background:transparent; color:#fff; font-size:18px; cursor:pointer;}
 
   /* SLIDES */
   #slides{position:fixed; inset:0; z-index:1;}
   .slide{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; opacity:0; visibility:hidden; transition:opacity .6s ease; z-index:1;}
   .slide.active{opacity:1; visibility:visible; z-index:2;}
-  .slide-inner{width:100%; max-width:920px; max-height:100vh; max-height:100dvh; overflow-y:auto; padding:96px 32px 80px; scrollbar-width:thin;}
+  .slide-inner{width:100%; max-width:920px; max-height:100vh; max-height:100dvh; overflow-y:auto; padding:104px 32px 80px; scrollbar-width:thin;}
   .slide-inner::-webkit-scrollbar{width:6px;}
   .slide-inner::-webkit-scrollbar-thumb{background:var(--border); border-radius:3px;}
 
@@ -105,10 +96,6 @@
   .hero-photo-wrap{flex:0 0 auto; position:relative;}
   .hero-photo-wrap::before{content:""; position:absolute; inset:-12px; border:1.5px solid var(--gold); border-radius:28px; opacity:.45; z-index:-1;}
   .hero-photo{display:block; width:250px; height:310px; object-fit:cover; border-radius:22px; box-shadow:0 28px 50px -22px rgba(18,40,63,.4);}
-  .logo-mark--hero{width:96px; height:96px; margin-bottom:22px;}
-  .logo-mark--hero circle.ring{stroke-dasharray:220; stroke-dashoffset:220; animation:draw 1.3s ease forwards .3s;}
-  .logo-mark--hero text{font-size:30px;}
-  @keyframes draw{to{stroke-dashoffset:0;}}
   .hero-headline{font-family:var(--serif); font-weight:500; font-size:clamp(28px,5.2vw,46px); line-height:1.16; color:var(--navy); margin-bottom:20px; max-width:700px;}
   .hero-sub{font-size:16.5px; color:var(--muted); max-width:560px; margin-bottom:28px;}
   .hero-actions{display:flex; gap:14px; flex-wrap:wrap; margin-bottom:34px;}
@@ -151,15 +138,17 @@
   .pilier-card h3{font-size:16.5px; color:var(--navy); margin-bottom:10px; font-weight:700;}
   .pilier-card p{font-size:14px; color:var(--muted); line-height:1.55;}
 
-  /* EXPERIENCES */
+  /* EXPERIENCE (rubrique unique) */
+  .exp-block{padding-top:28px; margin-top:28px; border-top:1px solid var(--border);}
+  .exp-block:first-of-type{padding-top:0; margin-top:0; border-top:none;}
   .job-head{display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:8px; margin-bottom:4px;}
-  .job-role{font-family:var(--serif); font-size:clamp(20px,3vw,25px); font-weight:600; color:var(--navy);}
+  .job-role{font-family:var(--serif); font-size:clamp(19px,2.6vw,23px); font-weight:600; color:var(--navy);}
   .job-meta{font-size:13.5px; color:var(--muted-2); font-weight:600;}
-  .job-dates{font-size:13px; color:var(--gold); font-weight:600; margin-bottom:20px;}
-  .job ul{list-style:none; margin-bottom:16px;}
-  .job li{font-size:14.5px; color:var(--ink); padding-left:18px; position:relative; margin-bottom:8px; line-height:1.5;}
-  .job li::before{content:"—"; position:absolute; left:0; color:var(--gold);}
-  .job-stack{font-size:12.5px; color:var(--muted-2); font-style:italic; margin-top:4px;}
+  .job-dates{font-size:13px; color:var(--gold); font-weight:600; margin-bottom:16px;}
+  .exp-block ul{list-style:none; margin-bottom:14px;}
+  .exp-block li{font-size:14px; color:var(--ink); padding-left:18px; position:relative; margin-bottom:7px; line-height:1.5;}
+  .exp-block li::before{content:"—"; position:absolute; left:0; color:var(--gold);}
+  .job-stack{font-size:12px; color:var(--muted-2); font-style:italic;}
 
   /* PROJETS */
   .projets-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:18px;}
@@ -185,30 +174,24 @@
   /* CONTACT (dark closing slide) */
   #slide-contact{background:linear-gradient(160deg, var(--navy), var(--navy-3)); overflow:hidden;}
   .contact-watermark{position:absolute; right:2%; bottom:-6%; font-family:var(--serif); font-size:min(40vw,420px); font-weight:600; color:rgba(255,255,255,0.05); pointer-events:none; user-select:none;}
-  #slide-contact .slide-inner{text-align:left;}
+  #slide-contact .slide-inner{text-align:left; display:flex; flex-wrap:wrap; gap:40px; align-items:flex-start; max-width:920px;}
   #slide-contact .eyebrow{color:var(--gold);}
-  .contact-title{font-family:var(--serif); font-size:clamp(26px,4.4vw,40px); font-weight:600; margin-bottom:20px; color:#fff;}
-  .contact-person{display:flex; align-items:center; gap:14px; margin-bottom:24px;}
-  .contact-avatar{width:56px; height:56px; border-radius:50%; object-fit:cover; border:2px solid var(--gold); flex-shrink:0;}
-  .contact-person strong{display:block; color:#fff; font-family:var(--serif); font-size:16px; font-weight:600;}
-  .contact-person span{display:block; color:#9FB0C4; font-size:12.5px; margin-top:2px;}
-  .contact-pitch{color:#E7ECF3; font-size:15.5px; margin-bottom:24px; max-width:560px; line-height:1.6;}
-  .contact-sub{color:#C7D2E0; font-size:14.5px; margin-bottom:30px; max-width:520px;}
-  .contact-links{display:flex; gap:14px; flex-wrap:wrap; margin-bottom:40px;}
-  .contact-links a, .contact-links button{color:#fff; font-size:14px; text-decoration:none; border:1px solid rgba(255,255,255,0.3); background:transparent; padding:9px 16px; border-radius:6px; font-weight:600; cursor:pointer; transition:background .2s ease; appearance:none; -webkit-appearance:none; font-family:inherit;}
-  .contact-links a:hover, .contact-links button:hover{background:rgba(255,255,255,0.1);}
-  .contact-links .btn-primary{background:var(--gold); border-color:var(--gold);}
-  .contact-footer{font-size:12.5px; color:rgba(255,255,255,0.45);}
-
-  /* NAV: side dots */
-  .side-nav{position:fixed; right:26px; top:50%; transform:translateY(-50%); z-index:25; display:flex; flex-direction:column; gap:12px;}
-  .side-dot{position:relative; width:10px; height:10px; border-radius:50%; background:transparent; border:1.5px solid var(--muted-2); cursor:pointer; padding:0; transition:background .2s ease, border-color .2s ease, transform .2s ease;}
-  .side-dot:hover{transform:scale(1.25);}
-  .side-dot.active{background:var(--navy); border-color:var(--navy);}
-  .side-dot::after{content:attr(data-label); position:absolute; right:22px; top:50%; transform:translateY(-50%); white-space:nowrap; font-size:11.5px; font-weight:600; background:var(--navy); color:#fff; padding:5px 10px; border-radius:6px; opacity:0; pointer-events:none; transition:opacity .2s ease;}
-  .side-dot:hover::after{opacity:1;}
-  header.topbar.on-dark ~ .side-nav .side-dot{border-color:rgba(255,255,255,0.5);}
-  header.topbar.on-dark ~ .side-nav .side-dot.active{background:#fff; border-color:#fff;}
+  .contact-intro{flex:1 1 380px; min-width:0;}
+  .contact-title{font-family:var(--serif); font-size:clamp(26px,4.4vw,38px); font-weight:600; margin-bottom:16px; color:#fff;}
+  .contact-pitch{color:#E7ECF3; font-size:15.5px; margin-bottom:18px; max-width:480px; line-height:1.6;}
+  .contact-sub{color:#C7D2E0; font-size:14px; margin-bottom:22px; max-width:460px;}
+  .contact-secondary{display:flex; gap:18px; flex-wrap:wrap;}
+  .contact-secondary a, .contact-secondary button{color:#C7D2E0; font-size:13px; text-decoration:underline; background:none; border:none; cursor:pointer; font-family:inherit; padding:0; appearance:none; -webkit-appearance:none;}
+  .contact-secondary a:hover, .contact-secondary button:hover{color:#fff;}
+  .contact-footer{font-size:12px; color:rgba(255,255,255,0.4); margin-top:26px;}
+  .contact-form-wrap{flex:1 1 340px; min-width:290px;}
+  .contact-form-card{background:var(--surface); border-radius:16px; padding:28px 26px; box-shadow:0 26px 54px -22px rgba(0,0,0,.4);}
+  .contact-form-card label{display:block; font-size:12px; font-weight:600; color:var(--muted); margin-bottom:13px;}
+  .contact-form-card input, .contact-form-card textarea{display:block; width:100%; margin-top:6px; padding:10px 12px; border:1px solid var(--border); border-radius:8px; font-size:14px; font-family:inherit; color:var(--ink); resize:vertical;}
+  .contact-form-card input:focus, .contact-form-card textarea:focus{outline:none; border-color:var(--navy);}
+  .contact-form-card .btn{width:100%; justify-content:center; margin-top:2px;}
+  .contact-form-success{display:none; color:var(--gold); font-weight:600; font-size:14px; padding:6px 0 2px;}
+  .contact-form-success.show{display:block;}
 
   /* NAV: arrows + counter */
   .nav-arrow{position:fixed; z-index:25; top:50%; transform:translateY(-50%); width:44px; height:44px; border-radius:50%; border:1px solid var(--border); background:var(--surface); color:var(--navy); font-size:20px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background .2s ease, opacity .2s ease;}
@@ -220,34 +203,17 @@
   .slide-counter{position:fixed; left:20px; bottom:24px; z-index:25; font-size:12.5px; font-weight:600; color:var(--muted-2); letter-spacing:.04em;}
   .slide-counter .cur{color:var(--navy); font-size:14px;}
 
-  /* LEAD CAPTURE MODAL */
-  .lead-modal{position:fixed; inset:0; z-index:60; display:flex; align-items:center; justify-content:center; opacity:0; visibility:hidden; transition:opacity .3s ease, visibility .3s ease;}
-  .lead-modal.open{opacity:1; visibility:visible;}
-  .lead-modal-backdrop{position:absolute; inset:0; background:rgba(11,27,44,0.55); backdrop-filter:blur(4px);}
-  .lead-modal-card{position:relative; background:var(--surface); border-radius:16px; padding:32px 30px; width:100%; max-width:400px; margin:20px; box-shadow:0 30px 60px -20px rgba(0,0,0,.45); transform:translateY(14px) scale(.97); transition:transform .3s ease;}
-  .lead-modal.open .lead-modal-card{transform:translateY(0) scale(1);}
-  .lead-modal-close{position:absolute; top:14px; right:14px; width:30px; height:30px; border-radius:50%; border:1px solid var(--border); background:transparent; cursor:pointer; color:var(--muted); font-size:14px;}
-  .lead-modal-close:hover{background:var(--bg);}
-  .lead-modal-title{font-family:var(--serif); font-size:20px; font-weight:600; color:var(--navy); margin-bottom:8px;}
-  .lead-modal-doc{font-size:13px; color:var(--gold); font-weight:600; margin-bottom:20px;}
-  #leadForm label{display:block; font-size:12.5px; font-weight:600; color:var(--muted); margin-bottom:14px;}
-  #leadForm input{display:block; width:100%; margin-top:6px; padding:10px 12px; border:1px solid var(--border); border-radius:8px; font-size:14px; font-family:inherit; color:var(--ink);}
-  #leadForm input:focus{outline:none; border-color:var(--navy);}
-  .lead-submit{width:100%; justify-content:center; margin-top:6px;}
-  .lead-modal-success{color:var(--gold); font-weight:600; font-size:14.5px; text-align:center; padding:18px 0;}
-  .lead-modal-privacy{font-size:11px; color:var(--muted-2); margin-top:14px; text-align:center; line-height:1.5;}
-
   @media (max-width:860px){
-    .side-nav{display:none;}
     .hero-inner{flex-direction:column;}
     .hero-photo-wrap{order:-1; margin-bottom:6px;}
     .hero-photo{width:170px; height:210px;}
     .hero-photo-wrap::before{inset:-8px; border-radius:22px;}
   }
   @media (max-width:720px){
-    header.topbar{padding:14px 18px;}
+    header.topbar{padding:12px 18px;}
     .logo-name{display:none;}
-    .slide-inner{padding:84px 20px 70px;}
+    .main-nav{gap:16px; justify-content:flex-start; width:100%; order:3;}
+    .slide-inner{padding:130px 20px 70px;}
     .nav-arrow{width:38px; height:38px; font-size:17px;}
     .nav-prev{left:14px;}
     .nav-next{left:60px;}
@@ -269,29 +235,22 @@
     <svg class="logo-mark" viewBox="0 0 44 44"><circle class="ring" cx="22" cy="22" r="19"/><text x="22" y="28" font-size="15" text-anchor="middle">DV</text></svg>
     <span class="logo-name">Daryne Voufo</span>
   </a>
+  <nav class="main-nav">
+    <a data-slide="0" data-i18n="nav.home">Accueil</a>
+    <a data-slide="1" data-i18n="nav.about">À propos</a>
+    <a data-slide="2" data-i18n="nav.expertise">Expertise</a>
+    <a data-slide="3" data-i18n="nav.experience">Expérience</a>
+    <a data-slide="4" data-i18n="nav.projects">Projets</a>
+    <a data-slide="5" data-i18n="nav.skills">Compétences</a>
+    <a data-slide="6" data-i18n="nav.contact">Contact</a>
+  </nav>
   <div class="topbar-actions">
     <button type="button" class="lang-toggle" id="langToggle" aria-label="Changer de langue / Switch language">
       <span class="lang-opt" data-lang-opt="fr">FR</span><span class="lang-opt" data-lang-opt="en">EN</span>
     </button>
-    <button type="button" class="btn btn-outline btn-sm" data-doc-fr="CV_Daryne_Voufo.pdf" data-doc-en="CV_Daryne_Voufo_EN.pdf" data-name-fr="CV — Daryne Voufo" data-name-en="CV — Daryne Voufo">CV</button>
-    <button class="menu-toggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    <a class="btn btn-outline btn-sm" data-doc-fr="CV_Daryne_Voufo.pdf" data-doc-en="CV_Daryne_Voufo_EN.pdf" download>CV</a>
   </div>
 </header>
-
-<nav class="slide-menu" aria-hidden="true">
-  <button class="menu-close" aria-label="Fermer">✕</button>
-  <ul>
-    <li><a data-slide="0" data-i18n="menu.0">Accueil</a></li>
-    <li><a data-slide="1" data-i18n="menu.1">À propos</a></li>
-    <li><a data-slide="2" data-i18n="menu.2">Expertise</a></li>
-    <li><a data-slide="3">Lemonway</a></li>
-    <li><a data-slide="4">CFPE France Parrainages</a></li>
-    <li><a data-slide="5">American Cola</a></li>
-    <li><a data-slide="6" data-i18n="menu.6">Projets</a></li>
-    <li><a data-slide="7" data-i18n="menu.7">Compétences</a></li>
-    <li><a data-slide="8">Contact</a></li>
-  </ul>
-</nav>
 
 <main id="slides">
 
@@ -302,8 +261,8 @@
         <h1 class="hero-headline reveal" data-i18n="hero.headline">Je transforme les parcours clients à l'ère du digital.</h1>
         <p class="hero-sub reveal" data-i18n="hero.sub">Chargée de Web Marketing formée à la digitalisation des parcours clients (EM Strasbourg), je relie l'acquisition, la donnée et la conduite du changement — au croisement du marketing et de l'IT.</p>
         <div class="hero-actions reveal">
-          <a class="btn btn-primary" data-slide="6" data-i18n="hero.cta.projects">Voir mes projets</a>
-          <button type="button" class="btn btn-outline" data-doc-fr="CV_Daryne_Voufo.pdf" data-doc-en="CV_Daryne_Voufo_EN.pdf" data-name-fr="CV — Daryne Voufo" data-name-en="CV — Daryne Voufo" data-i18n="hero.cta.cv">Télécharger mon CV</button>
+          <a class="btn btn-primary" data-slide="4" data-i18n="hero.cta.projects">Voir mes projets</a>
+          <a class="btn btn-outline" data-doc-fr="CV_Daryne_Voufo.pdf" data-doc-en="CV_Daryne_Voufo_EN.pdf" download data-i18n="hero.cta.cv">Télécharger mon CV</a>
         </div>
         <div class="stat-row reveal">
           <div class="stat-box"><span class="num" data-count="90">0</span><span class="suffix">+</span><span class="label" data-i18n="stat.leads">leads qualifiés / mois</span></div>
@@ -379,70 +338,68 @@
     </div>
   </section>
 
-  <section class="slide job" id="slide-job1">
+  <section class="slide" id="slide-experience">
     <div class="slide-inner">
-      <p class="eyebrow reveal" data-i18n="job.eyebrow">Expérience professionnelle</p>
-      <div class="job-head reveal">
-        <span class="job-role" data-i18n="job1.role">Digital Marketing Officer</span>
-        <span class="job-meta"><img class="company-logo" src="logos/lemonway.png" alt="Lemonway"><span data-i18n="job1.meta">Lemonway · Paris</span></span>
-      </div>
-      <div class="job-dates reveal">09/2024 – 09/2025</div>
-      <div class="stat-row reveal" style="margin-bottom:22px;">
-        <div class="stat-box"><span class="num" data-count="90">0</span><span class="suffix">+</span><span class="label" data-i18n="stat.leads">leads qualifiés / mois</span></div>
-        <div class="stat-box"><span class="num" data-count="40">0</span><span class="suffix">%</span><span class="label" data-i18n="job1.stat2">gain vs traitement manuel</span></div>
-        <div class="stat-box"><span class="num" data-count="8000">0</span><span class="label" data-i18n="job1.stat3">contacts qualifiés Salesforce</span></div>
-      </div>
-      <ul class="reveal">
-        <li data-i18n="job1.li1">Animé la stratégie de contenu B2B bilingue FR/EN — 10 articles de blog, 10+ posts LinkedIn et 20+ contenus web ciblant les prospects</li>
-        <li data-i18n="job1.li2">Piloté 6 campagnes digitales B2B (Google Ads, LinkedIn Ads, emailing) — 90 leads qualifiés (MQL) générés par mois en moyenne</li>
-        <li data-i18n="job1.li3">Automatisé 4 scénarios de nurturing sous Pardot — gain de 40% sur le traitement manuel, conformité RGPD</li>
-        <li data-i18n="job1.li4">Qualifié 8 000 contacts dans Salesforce CRM — réduction de 30% des leads non exploitables sur 3 mois</li>
-        <li data-i18n="job1.li5">Augmenté le taux d'ouverture emailing de 20% via A/B testing et lead scoring comportemental</li>
-        <li data-i18n="job1.li6">Construit 2 dashboards de suivi acquisition (trafic, conversion, ROI) et coordonné des webinars externes</li>
-        <li data-i18n="job1.li7">Créé la newsletter prospects pour les marketplaces B2B/B2C et la plateforme de crowdfunding</li>
-      </ul>
-      <div class="job-stack reveal">Google Ads · LinkedIn Ads · Salesforce CRM · Pardot · GA4 · Looker Studio · WordPress · Jira</div>
-    </div>
-  </section>
+      <p class="eyebrow reveal" data-i18n="exp.eyebrow">Expérience professionnelle</p>
+      <h2 class="section-title reveal" data-i18n="exp.title">Ce que j'ai concrètement mené</h2>
 
-  <section class="slide job" id="slide-job2">
-    <div class="slide-inner">
-      <p class="eyebrow reveal" data-i18n="job.eyebrow">Expérience professionnelle</p>
-      <div class="job-head reveal">
-        <span class="job-role" data-i18n="job2.role">Chargée de Marketing Digital</span>
-        <span class="job-meta"><img class="company-logo" src="logos/france-parrainages.png" alt="France Parrainages"><span>CFPE France Parrainages · Paris</span></span>
+      <div class="exp-block reveal">
+        <div class="job-head">
+          <span class="job-role" data-i18n="job1.role">Digital Marketing Officer</span>
+          <span class="job-meta"><img class="company-logo" src="logos/lemonway.png" alt="Lemonway"><span data-i18n="job1.meta">Lemonway · Paris</span></span>
+        </div>
+        <div class="job-dates">09/2024 – 09/2025</div>
+        <div class="stat-row" style="margin-bottom:16px;">
+          <div class="stat-box"><span class="num" data-count="90">0</span><span class="suffix">+</span><span class="label" data-i18n="stat.leads">leads qualifiés / mois</span></div>
+          <div class="stat-box"><span class="num" data-count="40">0</span><span class="suffix">%</span><span class="label" data-i18n="job1.stat2">gain vs traitement manuel</span></div>
+          <div class="stat-box"><span class="num" data-count="8000">0</span><span class="label" data-i18n="job1.stat3">contacts qualifiés Salesforce</span></div>
+        </div>
+        <ul>
+          <li data-i18n="job1.li1">Animé la stratégie de contenu B2B bilingue FR/EN — 10 articles de blog, 10+ posts LinkedIn et 20+ contenus web ciblant les prospects</li>
+          <li data-i18n="job1.li2">Piloté 6 campagnes digitales B2B (Google Ads, LinkedIn Ads, emailing) — 90 leads qualifiés (MQL) générés par mois en moyenne</li>
+          <li data-i18n="job1.li3">Automatisé 4 scénarios de nurturing sous Pardot — gain de 40% sur le traitement manuel, conformité RGPD</li>
+          <li data-i18n="job1.li4">Qualifié 8 000 contacts dans Salesforce CRM — réduction de 30% des leads non exploitables sur 3 mois</li>
+          <li data-i18n="job1.li5">Augmenté le taux d'ouverture emailing de 20% via A/B testing et lead scoring comportemental</li>
+          <li data-i18n="job1.li6">Construit 2 dashboards de suivi acquisition (trafic, conversion, ROI) et coordonné des webinars externes</li>
+          <li data-i18n="job1.li7">Créé la newsletter prospects pour les marketplaces B2B/B2C et la plateforme de crowdfunding</li>
+        </ul>
+        <div class="job-stack">Google Ads · LinkedIn Ads · Salesforce CRM · Pardot · GA4 · Looker Studio · WordPress · Jira</div>
       </div>
-      <div class="job-dates reveal">08/2023 – 01/2024</div>
-      <div class="stat-row reveal" style="margin-bottom:22px;">
-        <div class="stat-box"><span class="num" data-count="97">0</span><span class="suffix">%</span><span class="label" data-i18n="job2.stat1">délivrabilité maintenue</span></div>
-        <div class="stat-box"><span class="num" data-count="18">0</span><span class="suffix">%</span><span class="label" data-i18n="job2.stat2">taux de rebond en moins</span></div>
-        <div class="stat-box"><span class="num" data-count="7">0</span><span class="label" data-i18n="job2.stat3">recommandations intégrées</span></div>
-      </div>
-      <ul class="reveal">
-        <li data-i18n="job2.li1">Géré 8 campagnes emailing semestrielles (segmentation CRM, copywriting) — délivrabilité maintenue à 97%</li>
-        <li data-i18n="job2.li2">Optimisé 5 parcours d'acquisition (SEO on-page, CTA, arborescence) via GA4 — taux de rebond réduit de 18%</li>
-        <li data-i18n="job2.li3">Réalisé une analyse concurrentielle de 5 acteurs — 7 recommandations intégrées au plan marketing Q1 2024</li>
-      </ul>
-      <div class="job-stack reveal">Webmecanik · Google Analytics 4 · WordPress · Canva · Mailchimp</div>
-    </div>
-  </section>
 
-  <section class="slide job" id="slide-job3">
-    <div class="slide-inner">
-      <p class="eyebrow reveal" data-i18n="job.eyebrow">Expérience professionnelle</p>
-      <div class="job-head reveal">
-        <span class="job-role" data-i18n="job3.role">Assistante Chef de Produit</span>
-        <span class="job-meta"><img class="company-logo" src="logos/source-du-pays.png" alt="Source du Pays"><span data-i18n="job3.meta">American Cola (Source du Pays) · Douala, Cameroun</span></span>
+      <div class="exp-block reveal">
+        <div class="job-head">
+          <span class="job-role" data-i18n="job2.role">Chargée de Marketing Digital</span>
+          <span class="job-meta"><img class="company-logo" src="logos/france-parrainages.png" alt="France Parrainages"><span>CFPE France Parrainages · Paris</span></span>
+        </div>
+        <div class="job-dates">08/2023 – 01/2024</div>
+        <div class="stat-row" style="margin-bottom:16px;">
+          <div class="stat-box"><span class="num" data-count="97">0</span><span class="suffix">%</span><span class="label" data-i18n="job2.stat1">délivrabilité maintenue</span></div>
+          <div class="stat-box"><span class="num" data-count="18">0</span><span class="suffix">%</span><span class="label" data-i18n="job2.stat2">taux de rebond en moins</span></div>
+          <div class="stat-box"><span class="num" data-count="7">0</span><span class="label" data-i18n="job2.stat3">recommandations intégrées</span></div>
+        </div>
+        <ul>
+          <li data-i18n="job2.li1">Géré 8 campagnes emailing semestrielles (segmentation CRM, copywriting) — délivrabilité maintenue à 97%</li>
+          <li data-i18n="job2.li2">Optimisé 5 parcours d'acquisition (SEO on-page, CTA, arborescence) via GA4 — taux de rebond réduit de 18%</li>
+          <li data-i18n="job2.li3">Réalisé une analyse concurrentielle de 5 acteurs — 7 recommandations intégrées au plan marketing Q1 2024</li>
+        </ul>
+        <div class="job-stack">Webmecanik · Google Analytics 4 · WordPress · Canva · Mailchimp</div>
       </div>
-      <div class="job-dates reveal">03/2022 – 08/2022</div>
-      <div class="stat-row reveal" style="margin-bottom:22px;">
-        <div class="stat-box"><span class="num" data-count="120">0</span><span class="label" data-i18n="job3.stat1">consommateurs interrogés</span></div>
-        <div class="stat-box"><span class="num" data-count="6">0</span><span class="label" data-i18n="job3.stat2">concurrents analysés</span></div>
+
+      <div class="exp-block reveal">
+        <div class="job-head">
+          <span class="job-role" data-i18n="job3.role">Assistante Chef de Produit</span>
+          <span class="job-meta"><img class="company-logo" src="logos/source-du-pays.png" alt="Source du Pays"><span data-i18n="job3.meta">American Cola (Source du Pays) · Douala, Cameroun</span></span>
+        </div>
+        <div class="job-dates">03/2022 – 08/2022</div>
+        <div class="stat-row" style="margin-bottom:16px;">
+          <div class="stat-box"><span class="num" data-count="120">0</span><span class="label" data-i18n="job3.stat1">consommateurs interrogés</span></div>
+          <div class="stat-box"><span class="num" data-count="6">0</span><span class="label" data-i18n="job3.stat2">concurrents analysés</span></div>
+        </div>
+        <ul>
+          <li data-i18n="job3.li1">Réalisé une étude de marché sur 120 consommateurs et une veille de 6 concurrents — cahier des charges livré pour le lancement produit</li>
+          <li data-i18n="job3.li2">Analysé les données de performance post-lancement (ventes, parts de marché, retours terrain) — rapport mensuel formalisé</li>
+        </ul>
       </div>
-      <ul class="reveal">
-        <li data-i18n="job3.li1">Réalisé une étude de marché sur 120 consommateurs et une veille de 6 concurrents — cahier des charges livré pour le lancement produit</li>
-        <li data-i18n="job3.li2">Analysé les données de performance post-lancement (ventes, parts de marché, retours terrain) — rapport mensuel formalisé</li>
-      </ul>
     </div>
   </section>
 
@@ -456,14 +413,14 @@
           <img class="projet-logo" src="logos/bnp-paribas.svg" alt="BNP Paribas">
           <h3 data-i18n="proj1.title">Parcours de souscription — BNP Paribas</h3>
           <p data-i18n="proj1.desc">Le tunnel de souscription en ligne perdait des clients à chaque étape. J'ai disséqué le parcours, isolé les frictions critiques et livré un plan d'action concret — jusqu'à la conduite du changement pour le faire adopter en interne.</p>
-          <button type="button" class="btn btn-outline btn-sm" data-doc-fr="Audit_Parcours_BNP_Paribas.docx" data-doc-en="Audit_Parcours_BNP_Paribas_EN.docx" data-name-fr="Audit — Parcours de souscription BNP Paribas" data-name-en="Study — BNP Paribas Subscription Journey" data-i18n="proj1.btn">Télécharger l'étude</button>
+          <a class="btn btn-outline btn-sm" data-doc-fr="Audit_Parcours_BNP_Paribas.docx" data-doc-en="Audit_Parcours_BNP_Paribas_EN.docx" download data-i18n="proj1.btn">Télécharger l'étude</a>
         </div>
         <div class="projet-card">
           <span class="projet-tag" data-i18n="proj2.tag">Audit SEO · 2025</span>
           <span class="brand-wordmark">MUSTELA</span>
           <h3 data-i18n="proj2.title">Audit SEO complet — Mustela</h3>
           <p data-i18n="proj2.desc">56 pages d'audit sur mustela.fr : j'ai passé le site Shopify au crible — technique, sémantique, netlinking, EEAT — et livré des recommandations concrètes pour regagner en visibilité sur Google. Un audit du même type a aussi été mené pour Club Med.</p>
-          <button type="button" class="btn btn-outline btn-sm" data-doc-fr="Audit_SEO_Mustela.pdf" data-doc-en="Audit_SEO_Mustela_EN_Summary.pdf" data-name-fr="Audit SEO — Mustela" data-name-en="SEO Audit — Mustela (Executive Summary)" data-i18n="proj2.btn">Télécharger l'audit</button>
+          <a class="btn btn-outline btn-sm" data-doc-fr="Audit_SEO_Mustela.pdf" data-doc-en="Audit_SEO_Mustela_EN_Summary.pdf" download data-i18n="proj2.btn">Télécharger l'audit</a>
         </div>
         <div class="projet-card">
           <span class="projet-tag" data-i18n="proj3.tag">Data & pilotage</span>
@@ -477,14 +434,14 @@
           <img class="projet-logo" src="logos/lemonway.png" alt="Lemonway">
           <h3 data-i18n="proj4.title">Adoption d'un assistant IA — Lemonway</h3>
           <p data-i18n="proj4.desc">Comment faire adopter l'IA à des équipes qui s'en méfient ? Un plan concret : résistances anticipées, formation terrain, garde-fous réglementaires.</p>
-          <button type="button" class="btn btn-outline btn-sm" data-doc-fr="Note_Conduite_Changement_IA_Lemonway.docx" data-doc-en="Note_Conduite_Changement_IA_Lemonway_EN.docx" data-name-fr="Note — Conduite du changement IA Lemonway" data-name-en="Brief — Lemonway AI Change Management" data-i18n="proj4.btn">Télécharger la note</button>
+          <a class="btn btn-outline btn-sm" data-doc-fr="Note_Conduite_Changement_IA_Lemonway.docx" data-doc-en="Note_Conduite_Changement_IA_Lemonway_EN.docx" download data-i18n="proj4.btn">Télécharger la note</a>
         </div>
         <div class="projet-card in-progress">
           <span class="badge-progress" data-i18n="proj5.badge">En cours</span>
           <span class="projet-tag">Data science marketing</span>
           <h3 data-i18n="proj5.title">Pilotage d'une campagne bancaire — Kaggle</h3>
           <p data-i18n="proj5.desc">Un dataset bancaire brut, du bruit partout : je nettoie, je feature-engineer, direction un dashboard de ciblage prêt à guider la prochaine campagne.</p>
-          <button type="button" class="btn btn-outline btn-sm" data-doc-fr="nettoyage_bank_marketing.py" data-doc-en="nettoyage_bank_marketing.py" data-name-fr="Script — Nettoyage Bank Marketing" data-name-en="Script — Bank Marketing Cleanup" data-i18n="proj5.btn">Voir le script</button>
+          <a class="btn btn-outline btn-sm" href="nettoyage_bank_marketing.py" download data-i18n="proj5.btn">Voir le script</a>
         </div>
       </div>
     </div>
@@ -553,79 +510,57 @@
   <section class="slide" id="slide-contact">
     <span class="contact-watermark" aria-hidden="true">DV</span>
     <div class="slide-inner">
-      <p class="eyebrow reveal">Contact</p>
-      <h2 class="contact-title reveal" data-i18n="contact.title">Discutons de mon prochain poste</h2>
-      <p class="contact-pitch reveal" data-i18n="contact.pitch">Ce portfolio montre ce que j'ai fait ; j'aimerais surtout vous montrer, en échangeant, ce que je peux apporter à votre équipe.</p>
-      <p class="contact-sub reveal" data-i18n="contact.sub">Disponible pour un premier emploi à partir de 2026 en marketing digital (profil pont marketing × IT), mobile sur Paris / Île-de-France et dans toute la France. Actuellement en veille active sur l'IA générative et les agents pour renforcer mon impact.</p>
-      <div class="contact-links reveal">
-        <a href="mailto:voufodaryne072@gmail.com">voufodaryne072@gmail.com</a>
-        <a href="tel:+33753157627">+33 (0)7 53 15 76 27</a>
-        <a href="https://www.linkedin.com/in/daryne-voufo-133938203/" target="_blank">LinkedIn</a>
-        <button type="button" class="btn-primary" data-doc-fr="CV_Daryne_Voufo.pdf" data-doc-en="CV_Daryne_Voufo_EN.pdf" data-name-fr="CV — Daryne Voufo" data-name-en="CV — Daryne Voufo" data-i18n="contact.cv">Télécharger le CV</button>
+      <div class="contact-intro reveal">
+        <p class="eyebrow">Contact</p>
+        <h2 class="contact-title" data-i18n="contact.title">Discutons de mon prochain poste</h2>
+        <p class="contact-pitch" data-i18n="contact.pitch">Ce portfolio montre ce que j'ai fait ; j'aimerais surtout vous montrer, en échangeant, ce que je peux apporter à votre équipe.</p>
+        <p class="contact-sub" data-i18n="contact.sub">Disponible pour un premier emploi à partir de 2026 en marketing digital (profil pont marketing × IT), mobile sur Paris / Île-de-France et dans toute la France.</p>
+        <div class="contact-secondary">
+          <a href="https://www.linkedin.com/in/daryne-voufo-133938203/" target="_blank">LinkedIn</a>
+          <a data-doc-fr="CV_Daryne_Voufo.pdf" data-doc-en="CV_Daryne_Voufo_EN.pdf" download data-i18n="contact.cv">Télécharger le CV</a>
+        </div>
+        <p class="contact-footer" data-i18n="contact.footer">Daryne Voufo — Marketing digital & transformation des parcours clients · 2026</p>
       </div>
-      <div class="contact-person reveal">
-        <img class="contact-avatar" src="photo-daryne-voufo.jpg" alt="Daryne Voufo">
-        <div>
-          <strong>Daryne Voufo</strong>
-          <span data-i18n="contact.role">Marketing digital · Parcours client</span>
+      <div class="contact-form-wrap reveal">
+        <div class="contact-form-card">
+          <form id="contactForm" name="contactForm" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+            <input type="hidden" name="form-name" value="contactForm">
+            <p style="position:absolute; left:-9999px;" aria-hidden="true">
+              <label>Ne pas remplir : <input name="bot-field" tabindex="-1" autocomplete="off"></label>
+            </p>
+            <label><span data-i18n="form.name">Nom</span>
+              <input type="text" name="name" required autocomplete="name">
+            </label>
+            <label>Email
+              <input type="email" name="email" required autocomplete="email">
+            </label>
+            <label><span data-i18n="form.message">Message</span>
+              <textarea name="message" rows="4" required></textarea>
+            </label>
+            <button type="submit" class="btn btn-primary" data-i18n="form.submit">Envoyer le message</button>
+          </form>
+          <p class="contact-form-success" data-i18n="form.success">Merci ! Votre message a bien été envoyé.</p>
         </div>
       </div>
-      <p class="contact-footer reveal" data-i18n="contact.footer">Daryne Voufo — Marketing digital & transformation des parcours clients · 2026</p>
     </div>
   </section>
 
 </main>
 
-<div class="side-nav" aria-hidden="true">
-  <button class="side-dot" data-slide="0" data-label-fr="Accueil" data-label-en="Home" data-label="Accueil"></button>
-  <button class="side-dot" data-slide="1" data-label-fr="À propos" data-label-en="About" data-label="À propos"></button>
-  <button class="side-dot" data-slide="2" data-label-fr="Expertise" data-label-en="Expertise" data-label="Expertise"></button>
-  <button class="side-dot" data-slide="3" data-label-fr="Lemonway" data-label-en="Lemonway" data-label="Lemonway"></button>
-  <button class="side-dot" data-slide="4" data-label-fr="CFPE" data-label-en="CFPE" data-label="CFPE"></button>
-  <button class="side-dot" data-slide="5" data-label-fr="American Cola" data-label-en="American Cola" data-label="American Cola"></button>
-  <button class="side-dot" data-slide="6" data-label-fr="Projets" data-label-en="Projects" data-label="Projets"></button>
-  <button class="side-dot" data-slide="7" data-label-fr="Compétences" data-label-en="Skills" data-label="Compétences"></button>
-  <button class="side-dot" data-slide="8" data-label-fr="Contact" data-label-en="Contact" data-label="Contact"></button>
-</div>
-
 <button class="nav-arrow nav-prev" aria-label="Slide précédente">‹</button>
 <button class="nav-arrow nav-next" aria-label="Slide suivante">›</button>
-<div class="slide-counter"><span class="cur">01</span> / <span class="total">09</span></div>
-
-<div class="lead-modal" id="leadModal" aria-hidden="true">
-  <div class="lead-modal-backdrop" data-modal-close></div>
-  <div class="lead-modal-card" role="dialog" aria-modal="true" aria-labelledby="leadModalTitle">
-    <button type="button" class="lead-modal-close" data-modal-close aria-label="Fermer">✕</button>
-    <p class="eyebrow" style="margin-bottom:8px;" data-i18n="modal.eyebrow">Accès au document</p>
-    <h3 id="leadModalTitle" class="lead-modal-title" data-i18n="modal.title">Un dernier pas avant le téléchargement</h3>
-    <p class="lead-modal-doc"></p>
-    <form id="leadForm" name="leadForm" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
-      <input type="hidden" name="form-name" value="leadForm">
-      <p style="position:absolute; left:-9999px;" aria-hidden="true">
-        <label>Ne pas remplir : <input name="bot-field" tabindex="-1" autocomplete="off"></label>
-      </p>
-      <label><span data-i18n="modal.name">Nom</span>
-        <input type="text" name="name" required autocomplete="name">
-      </label>
-      <label>Email
-        <input type="email" name="email" required autocomplete="email">
-      </label>
-      <input type="hidden" name="document" value="">
-      <button type="submit" class="btn btn-primary lead-submit" data-i18n="modal.submit">Télécharger le document</button>
-    </form>
-    <p class="lead-modal-success" hidden data-i18n="modal.success">Merci ! Le téléchargement démarre…</p>
-    <p class="lead-modal-privacy" data-i18n="modal.privacy">Utilisé uniquement pour vous recontacter au sujet de cette candidature.</p>
-  </div>
-</div>
+<div class="slide-counter"><span class="cur">01</span> / <span class="total">07</span></div>
 
 <script>
 (function(){
   var translations = {
-    'menu.0': { fr:'Accueil', en:'Home' },
-    'menu.1': { fr:'À propos', en:'About' },
-    'menu.2': { fr:'Expertise', en:'Expertise' },
-    'menu.6': { fr:'Projets', en:'Projects' },
-    'menu.7': { fr:'Compétences', en:'Skills' },
+    'nav.home': { fr:'Accueil', en:'Home' },
+    'nav.about': { fr:'À propos', en:'About' },
+    'nav.expertise': { fr:'Expertise', en:'Expertise' },
+    'nav.experience': { fr:'Expérience', en:'Experience' },
+    'nav.projects': { fr:'Projets', en:'Projects' },
+    'nav.skills': { fr:'Compétences', en:'Skills' },
+    'nav.contact': { fr:'Contact', en:'Contact' },
     'hero.eyebrow': { fr:'Marketing digital · Parcours client · Conduite du changement', en:'Digital Marketing · Customer Journey · Change Management' },
     'hero.headline': { fr:"Je transforme les parcours clients à l'ère du digital.", en:'I turn customer journeys into growth, for the digital age.' },
     'hero.sub': { fr:"Chargée de Web Marketing formée à la digitalisation des parcours clients (EM Strasbourg), je relie l'acquisition, la donnée et la conduite du changement — au croisement du marketing et de l'IT.", en:'Web Marketing Officer trained in customer journey digitalisation (EM Strasbourg), I connect acquisition, data and change management — where marketing meets IT.' },
@@ -650,7 +585,8 @@
     'pilier2.desc': { fr:'Cartographier un parcours, identifier les frictions, et le repenser avec un double regard marketing et expérience utilisateur.', en:'Mapping a journey, spotting the friction points, and redesigning it with a dual marketing and user-experience lens.' },
     'pilier3.title': { fr:'Conduite du changement', en:'Change management' },
     'pilier3.desc': { fr:'Faire adopter un outil ou un process par des équipes non-tech — anticiper les résistances plutôt que les subir.', en:'Getting non-tech teams to adopt a tool or process — anticipating resistance instead of just reacting to it.' },
-    'job.eyebrow': { fr:'Expérience professionnelle', en:'Professional experience' },
+    'exp.eyebrow': { fr:'Expérience professionnelle', en:'Professional experience' },
+    'exp.title': { fr:'Ce que j’ai concrètement mené', en:'What I’ve actually done' },
     'job1.role': { fr:'Digital Marketing Officer', en:'Digital Marketing Officer' },
     'job1.meta': { fr:'Lemonway · Paris', en:'Lemonway · Paris' },
     'job1.stat2': { fr:'gain vs traitement manuel', en:'gain vs. manual processing' },
@@ -714,17 +650,14 @@
     'q.curiosite': { fr:'Curiosité', en:'Curiosity' },
     'q.proposition': { fr:'Force de proposition', en:'Proactivity' },
     'contact.title': { fr:'Discutons de mon prochain poste', en:'Let’s talk about my next role' },
-    'contact.role': { fr:'Marketing digital · Parcours client', en:'Digital Marketing · Customer Journey' },
     'contact.pitch': { fr:"Ce portfolio montre ce que j'ai fait ; j'aimerais surtout vous montrer, en échangeant, ce que je peux apporter à votre équipe.", en:"This portfolio shows what I've done; I'd love to show you, in person, what I can bring to your team." },
-    'contact.sub': { fr:"Disponible pour un premier emploi à partir de 2026 en marketing digital (profil pont marketing × IT), mobile sur Paris / Île-de-France et dans toute la France. Actuellement en veille active sur l'IA générative et les agents pour renforcer mon impact.", en:'Available for a first role from 2026 in digital marketing (a profile bridging marketing and IT), based in Paris / Île-de-France and open to relocating anywhere in France. Currently keeping a close watch on generative AI and agents to sharpen my impact.' },
+    'contact.sub': { fr:"Disponible pour un premier emploi à partir de 2026 en marketing digital (profil pont marketing × IT), mobile sur Paris / Île-de-France et dans toute la France.", en:'Available for a first role from 2026 in digital marketing (a profile bridging marketing and IT), based in Paris / Île-de-France and open to relocating anywhere in France.' },
     'contact.cv': { fr:'Télécharger le CV', en:'Download CV' },
     'contact.footer': { fr:'Daryne Voufo — Marketing digital & transformation des parcours clients · 2026', en:'Daryne Voufo — Digital marketing & customer journey transformation · 2026' },
-    'modal.eyebrow': { fr:'Accès au document', en:'Document access' },
-    'modal.title': { fr:'Un dernier pas avant le téléchargement', en:'One last step before downloading' },
-    'modal.name': { fr:'Nom', en:'Name' },
-    'modal.submit': { fr:'Télécharger le document', en:'Download the document' },
-    'modal.success': { fr:'Merci ! Le téléchargement démarre…', en:'Thank you! Your download is starting…' },
-    'modal.privacy': { fr:'Utilisé uniquement pour vous recontacter au sujet de cette candidature.', en:'Used only to follow up with you about this application.' }
+    'form.name': { fr:'Nom', en:'Name' },
+    'form.message': { fr:'Message', en:'Message' },
+    'form.submit': { fr:'Envoyer le message', en:'Send message' },
+    'form.success': { fr:'Merci ! Votre message a bien été envoyé.', en:'Thank you! Your message has been sent.' }
   };
 
   var currentLang = localStorage.getItem('lang') || 'fr';
@@ -737,14 +670,14 @@
       var entry = translations[el.getAttribute('data-i18n')];
       if(entry) el.textContent = entry[lang] || entry.fr;
     });
-    document.querySelectorAll('.side-dot').forEach(function(dot){
-      var v = lang === 'en' ? dot.getAttribute('data-label-en') : dot.getAttribute('data-label-fr');
-      if(v) dot.setAttribute('data-label', v);
+    document.querySelectorAll('[data-doc-fr]').forEach(function(el){
+      var file = lang === 'en' ? el.getAttribute('data-doc-en') : el.getAttribute('data-doc-fr');
+      el.setAttribute('href', file);
+      el.setAttribute('download', file.split('/').pop());
     });
     document.querySelectorAll('.lang-opt').forEach(function(opt){
       opt.classList.toggle('active', opt.getAttribute('data-lang-opt') === lang);
     });
-    document.querySelector('.lead-modal-doc').textContent = '';
   }
 
   var langToggle = document.getElementById('langToggle');
@@ -758,18 +691,11 @@
   var wheelLock = false;
   var contactIndex = slides.findIndex(function(s){ return s.id === 'slide-contact'; });
 
-  var dots = Array.from(document.querySelectorAll('.side-dot'));
+  var navLinks = Array.from(document.querySelectorAll('.main-nav a'));
   var prevBtn = document.querySelector('.nav-prev');
   var nextBtn = document.querySelector('.nav-next');
   var curLabel = document.querySelector('.slide-counter .cur');
   var topbar = document.querySelector('.topbar');
-  var body = document.body;
-
-  var leadModal = document.getElementById('leadModal');
-  var leadForm = document.getElementById('leadForm');
-  var leadDocLabel = document.querySelector('.lead-modal-doc');
-  var leadSuccess = document.querySelector('.lead-modal-success');
-  var pendingDoc = null, pendingDocName = '';
 
   function pad(n){ return n < 10 ? '0' + n : '' + n; }
 
@@ -792,7 +718,7 @@
   }
 
   function updateNav(){
-    dots.forEach(function(d){ d.classList.toggle('active', parseInt(d.getAttribute('data-slide'),10) === current); });
+    navLinks.forEach(function(l){ l.classList.toggle('active', parseInt(l.getAttribute('data-slide'),10) === current); });
     curLabel.textContent = pad(current + 1);
     prevBtn.disabled = current === 0;
     nextBtn.disabled = current === total - 1;
@@ -815,78 +741,39 @@
     return slides[current].querySelector('.slide-inner');
   }
 
-  // --- Lead capture before download ---
-  function openLeadModal(doc, docName){
-    pendingDoc = doc;
-    pendingDocName = docName;
-    leadDocLabel.textContent = (currentLang === 'en' ? 'Document: ' : 'Document : ') + docName;
-    leadForm.hidden = false;
-    leadSuccess.hidden = true;
-    leadForm.reset();
-    leadForm.document.value = docName;
-    leadModal.classList.add('open');
-    leadModal.setAttribute('aria-hidden', 'false');
-    setTimeout(function(){ leadForm.name.focus(); }, 300);
-  }
+  document.addEventListener('click', function(e){
+    var t = e.target.closest('[data-slide]');
+    if(t){
+      e.preventDefault();
+      goTo(parseInt(t.getAttribute('data-slide'), 10));
+    }
+  });
 
-  function closeLeadModal(){
-    leadModal.classList.remove('open');
-    leadModal.setAttribute('aria-hidden', 'true');
-  }
+  // --- Contact form (Netlify Forms) ---
+  var contactForm = document.getElementById('contactForm');
+  var contactSuccess = document.querySelector('.contact-form-success');
 
-  function triggerDownload(path){
-    var a = document.createElement('a');
-    a.href = path;
-    a.download = path.split('/').pop();
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-  }
-
-  // Enregistrement du contact via Netlify Forms (actif une fois le site déployé sur Netlify)
-  function sendLead(name, email, docName){
-    var body = new URLSearchParams({ 'form-name': 'leadForm', name: name, email: email, document: docName }).toString();
+  function sendContactMessage(name, email, message){
+    var body = new URLSearchParams({ 'form-name': 'contactForm', name: name, email: email, message: message }).toString();
     return fetch('/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: body
     }).catch(function(err){
-      console.warn('Envoi du contact impossible (site non déployé sur Netlify ?)', err);
+      console.warn('Envoi du message impossible (site non déployé sur Netlify ?)', err);
     });
   }
 
-  document.addEventListener('click', function(e){
-    var doc = e.target.closest('[data-doc-fr]');
-    if(doc){
-      e.preventDefault();
-      var file = currentLang === 'en' ? doc.getAttribute('data-doc-en') : doc.getAttribute('data-doc-fr');
-      var name = currentLang === 'en' ? doc.getAttribute('data-name-en') : doc.getAttribute('data-name-fr');
-      openLeadModal(file, name);
-      return;
-    }
-    if(e.target.closest('[data-modal-close]')){
-      closeLeadModal();
-      return;
-    }
-    var t = e.target.closest('[data-slide]');
-    if(t){
-      e.preventDefault();
-      goTo(parseInt(t.getAttribute('data-slide'), 10));
-      closeMenu();
-    }
-  });
-
-  leadForm.addEventListener('submit', function(e){
+  contactForm.addEventListener('submit', function(e){
     e.preventDefault();
-    var name = leadForm.name.value.trim();
-    var email = leadForm.email.value.trim();
+    var name = contactForm.name.value.trim();
+    var email = contactForm.email.value.trim();
+    var message = contactForm.message.value.trim();
     var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    if(!name || !emailOk) return;
-    sendLead(name, email, pendingDocName).finally(function(){
-      leadForm.hidden = true;
-      leadSuccess.hidden = false;
-      triggerDownload(pendingDoc);
-      setTimeout(closeLeadModal, 1600);
+    if(!name || !emailOk || !message) return;
+    sendContactMessage(name, email, message).finally(function(){
+      contactForm.hidden = true;
+      contactSuccess.classList.add('show');
     });
   });
 
@@ -894,7 +781,6 @@
   nextBtn.addEventListener('click', function(){ goTo(current + 1); });
 
   window.addEventListener('wheel', function(e){
-    if(leadModal.classList.contains('open')) return;
     var inner = activeInner();
     var atTop = inner.scrollTop <= 0;
     var atBottom = inner.scrollTop + inner.clientHeight >= inner.scrollHeight - 1;
@@ -916,14 +802,6 @@
   }, { passive: false });
 
   window.addEventListener('keydown', function(e){
-    if(leadModal.classList.contains('open')){
-      if(e.key === 'Escape') closeLeadModal();
-      return;
-    }
-    if(body.classList.contains('menu-open')){
-      if(e.key === 'Escape') closeMenu();
-      return;
-    }
     var inner = activeInner();
     var atTop = inner.scrollTop <= 0;
     var atBottom = inner.scrollTop + inner.clientHeight >= inner.scrollHeight - 1;
@@ -943,7 +821,6 @@
   var touchStartY = 0;
   window.addEventListener('touchstart', function(e){ touchStartY = e.touches[0].clientY; }, { passive: true });
   window.addEventListener('touchend', function(e){
-    if(leadModal.classList.contains('open')) return;
     var dy = touchStartY - e.changedTouches[0].clientY;
     if(Math.abs(dy) < 60) return;
     var inner = activeInner();
@@ -952,15 +829,6 @@
     if(dy > 0 && atBottom) goTo(current + 1);
     else if(dy < 0 && atTop) goTo(current - 1);
   }, { passive: true });
-
-  var menuToggle = document.querySelector('.menu-toggle');
-  var menuClose = document.querySelector('.menu-close');
-  function openMenu(){ body.classList.add('menu-open'); menuToggle.setAttribute('aria-expanded','true'); }
-  function closeMenu(){ body.classList.remove('menu-open'); menuToggle.setAttribute('aria-expanded','false'); }
-  menuToggle.addEventListener('click', function(){
-    body.classList.contains('menu-open') ? closeMenu() : openMenu();
-  });
-  menuClose.addEventListener('click', closeMenu);
 
   updateNav();
   triggerCounters(slides[0]);
