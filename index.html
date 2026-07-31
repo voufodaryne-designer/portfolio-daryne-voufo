@@ -112,17 +112,25 @@
   #slide-about p{font-size:16px; color:var(--ink); max-width:640px; margin-bottom:16px;}
 
   /* PARCOURS — SCHEMA CHRONOLOGIQUE */
-  .timeline-wrap{width:100%; overflow-x:auto; margin-top:22px; padding-bottom:6px;}
-  .timeline{display:block; min-width:640px; width:100%; max-width:820px;}
-  .timeline-path{fill:none; stroke:var(--navy-2); stroke-width:2.5; stroke-linecap:round; stroke-dasharray:900; stroke-dashoffset:900;}
-  .timeline-path.future{stroke:var(--gold); stroke-dasharray:6 6;}
+  .timeline-wrap{width:100%; overflow-x:auto; margin-top:24px; padding-bottom:6px;}
+  .timeline{display:block; min-width:680px; width:100%; max-width:860px;}
+  .timeline-path{fill:none; stroke:url(#timelineGradient); stroke-width:3; stroke-linecap:round; stroke-dasharray:900; stroke-dashoffset:900;}
+  .timeline-path.future{stroke:var(--gold); stroke-dasharray:5 7;}
   .slide.active .timeline-path{animation:timeline-draw 1.6s ease forwards .2s;}
   @keyframes timeline-draw{to{stroke-dashoffset:0;}}
-  .timeline-node{fill:var(--surface); stroke:var(--navy-2); stroke-width:2.5;}
-  .timeline-node.future-node{fill:var(--gold); stroke:var(--gold);}
-  .timeline-title{font-family:var(--sans); font-size:13px; font-weight:700; fill:var(--navy);}
+  .timeline-node-bg{stroke:#fff; stroke-width:3;}
+  .timeline-node-icon{fill:none; stroke:#fff; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round;}
+  .timeline-node-icon.filled{fill:#fff; stroke:none;}
+  .timeline-pulse{fill:none; stroke:var(--gold); stroke-width:2; opacity:0; transform-box:fill-box; transform-origin:center;}
+  .slide.active .timeline-pulse{animation:timeline-pulse 2.2s ease-out infinite 1.6s;}
+  @keyframes timeline-pulse{
+    0%{opacity:.55; transform:scale(1);}
+    100%{opacity:0; transform:scale(1.7);}
+  }
+  .timeline-title{font-family:var(--sans); font-size:12.5px; font-weight:700; fill:var(--navy);}
   .timeline-title.future-title{fill:var(--gold);}
-  .timeline-sub{font-family:var(--sans); font-size:11px; font-weight:600; fill:var(--muted-2);}
+  .timeline-sub{font-family:var(--sans); font-size:10.5px; font-weight:600; fill:var(--muted-2);}
+  .timeline-sub.future-sub{fill:var(--gold); font-weight:700;}
 
   /* COMPANY LOGOS */
   .company-logo{height:18px; width:auto; max-width:100px; object-fit:contain; vertical-align:middle; margin-right:8px;}
@@ -285,30 +293,65 @@
       <p class="reveal" data-i18n="about.p2">Chez Lemonway, cette conviction est devenue un métier : piloter un funnel B2B de bout en bout, de la campagne à la conversion, avec la donnée comme boussole. Aujourd'hui, je cherche un premier poste qui prolonge cette trajectoire, à la croisée du marketing et de l'IT.</p>
       <p class="reveal" data-i18n="about.p3">Et parce que ce métier change vite, j'apprends aussi vite : je m'immerge dans l'IA générative et les agents pour rester à la pointe et démultiplier mon impact dès mes premières missions.</p>
       <div class="timeline-wrap reveal">
-      <svg class="timeline" viewBox="0 0 900 130" role="img" aria-label="Mon parcours en 5 étapes : American Cola à Douala en 2022, Master 1 à l'EM Strasbourg 2022-2023, CFPE France Parrainages 2023-2024, Master 2 et alternance Lemonway 2024-2025, puis IA et Agents vers un premier poste en 2026">
-        <path class="timeline-path" d="M60,40 L645,40"/>
-        <path class="timeline-path future" d="M645,40 L840,40"/>
+      <svg class="timeline" viewBox="0 0 900 145" role="img" aria-label="Mon parcours en 5 étapes : American Cola à Douala en 2022, Master 1 à l'EM Strasbourg 2022-2023, CFPE France Parrainages 2023-2024, Master 2 et alternance Lemonway 2024-2025, puis IA et Agents en apprentissage continu">
+        <defs>
+          <linearGradient id="timelineGradient" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#8A93A0"/>
+            <stop offset="35%" stop-color="var(--navy-2)"/>
+            <stop offset="100%" stop-color="var(--navy)"/>
+          </linearGradient>
+        </defs>
 
-        <circle class="timeline-node" cx="60" cy="40" r="7"/>
-        <circle class="timeline-node" cx="255" cy="40" r="7"/>
-        <circle class="timeline-node" cx="450" cy="40" r="7"/>
-        <circle class="timeline-node" cx="645" cy="40" r="7"/>
-        <circle class="timeline-node future-node" cx="840" cy="40" r="8"/>
+        <path class="timeline-path" d="M60,45 L645,45"/>
+        <path class="timeline-path future" d="M645,45 L840,45"/>
 
-        <text class="timeline-title" x="60" y="70" text-anchor="middle">American Cola</text>
-        <text class="timeline-sub" x="60" y="87" text-anchor="middle">Douala · 2022</text>
+        <!-- American Cola : bouteille -->
+        <circle class="timeline-node-bg" cx="60" cy="45" r="15" fill="#8A93A0"/>
+        <g class="timeline-node-icon" transform="translate(60,45)">
+          <path d="M-2,-7 h4 v3 l2.5,3 v7 a1.5,1.5 0 0 1-1.5,1.5 h-5.5 a1.5,1.5 0 0 1-1.5-1.5 v-7 l2-3 z"/>
+        </g>
 
-        <text class="timeline-title" x="255" y="70" text-anchor="middle">EM Strasbourg</text>
-        <text class="timeline-sub" x="255" y="87" text-anchor="middle">Master 1 · 2022–2023</text>
+        <!-- EM Strasbourg : toque -->
+        <circle class="timeline-node-bg" cx="255" cy="45" r="15" fill="var(--navy-2)"/>
+        <g class="timeline-node-icon filled" transform="translate(255,45)">
+          <path d="M0,-6 L8,-2 L0,2 L-8,-2 Z"/>
+          <path class="timeline-node-icon" d="M-4,-0.3 V4 c0,1.4 8,1.4 8,0 v-4.3" fill="none"/>
+        </g>
 
-        <text class="timeline-title" x="450" y="70" text-anchor="middle">France Parrainages</text>
-        <text class="timeline-sub" x="450" y="87" text-anchor="middle">Paris · 2023–2024</text>
+        <!-- France Parrainages : coeur -->
+        <circle class="timeline-node-bg" cx="450" cy="45" r="15" fill="var(--navy-2)"/>
+        <g class="timeline-node-icon filled" transform="translate(450,45)">
+          <path d="M0,6 C-7,0 -7,-6 -2,-6 C-0.8,-6 0,-5 0,-4 C0,-5 0.8,-6 2,-6 C7,-6 7,0 0,6 Z"/>
+        </g>
 
-        <text class="timeline-title" x="645" y="70" text-anchor="middle">Lemonway</text>
-        <text class="timeline-sub" x="645" y="87" text-anchor="middle">Alternance M2 · 2024–2025</text>
+        <!-- Lemonway : carte -->
+        <circle class="timeline-node-bg" cx="645" cy="45" r="15" fill="var(--navy)"/>
+        <g class="timeline-node-icon" transform="translate(645,45)">
+          <rect x="-7.5" y="-5.5" width="15" height="11" rx="1.6"/>
+          <line x1="-7.5" y1="-1.8" x2="7.5" y2="-1.8"/>
+        </g>
 
-        <text class="timeline-title future-title" x="840" y="70" text-anchor="middle" data-i18n="timeline.future1">IA & Agents</text>
-        <text class="timeline-sub" x="840" y="87" text-anchor="middle" data-i18n="timeline.future2">Premier poste · 2026</text>
+        <!-- IA & Agents : sparkle, en cours -->
+        <circle class="timeline-pulse" cx="840" cy="45" r="15"/>
+        <circle class="timeline-node-bg" cx="840" cy="45" r="16" fill="var(--gold)"/>
+        <g class="timeline-node-icon filled" transform="translate(840,45)">
+          <path d="M0,-8 L1.6,-1.6 L8,0 L1.6,1.6 L0,8 L-1.6,1.6 L-8,0 L-1.6,-1.6 Z"/>
+        </g>
+
+        <text class="timeline-title" x="60" y="78" text-anchor="middle">American Cola</text>
+        <text class="timeline-sub" x="60" y="94" text-anchor="middle">Douala · 2022</text>
+
+        <text class="timeline-title" x="255" y="78" text-anchor="middle">EM Strasbourg</text>
+        <text class="timeline-sub" x="255" y="94" text-anchor="middle">Master 1 · 2022–2023</text>
+
+        <text class="timeline-title" x="450" y="78" text-anchor="middle">France Parrainages</text>
+        <text class="timeline-sub" x="450" y="94" text-anchor="middle">Paris · 2023–2024</text>
+
+        <text class="timeline-title" x="645" y="78" text-anchor="middle">Lemonway</text>
+        <text class="timeline-sub" x="645" y="94" text-anchor="middle">Alternance M2 · 2024–2025</text>
+
+        <text class="timeline-title future-title" x="840" y="78" text-anchor="middle" data-i18n="timeline.future1">IA & Agents</text>
+        <text class="timeline-sub future-sub" x="840" y="94" text-anchor="middle" data-i18n="timeline.future2">En apprentissage</text>
       </svg>
       </div>
     </div>
@@ -576,7 +619,7 @@
     'about.p2': { fr:"Chez Lemonway, cette conviction est devenue un métier : piloter un funnel B2B de bout en bout, de la campagne à la conversion, avec la donnée comme boussole. Aujourd'hui, je cherche un premier poste qui prolonge cette trajectoire, à la croisée du marketing et de l'IT.", en:'At Lemonway, that conviction became a craft: running a B2B funnel end to end, from campaign to conversion, with data as my compass. Today, I am looking for a first role that extends this path, where marketing meets IT.' },
     'about.p3': { fr:"Et parce que ce métier change vite, j'apprends aussi vite : je m'immerge dans l'IA générative et les agents pour rester à la pointe et démultiplier mon impact dès mes premières missions.", en:'And because this field moves fast, I move fast too: I am immersing myself in generative AI and agents to stay ahead of the curve and multiply my impact from my very first missions.' },
     'timeline.future1': { fr:'IA & Agents', en:'AI & Agents' },
-    'timeline.future2': { fr:'Premier poste · 2026', en:'First role · 2026' },
+    'timeline.future2': { fr:'En apprentissage', en:'Currently learning' },
     'piliers.eyebrow': { fr:'Expertise', en:'Expertise' },
     'piliers.title': { fr:'Trois piliers, une seule conviction', en:'Three pillars, one conviction' },
     'pilier1.title': { fr:'Marketing digital & acquisition', en:'Digital marketing & acquisition' },
@@ -802,6 +845,8 @@
   }, { passive: false });
 
   window.addEventListener('keydown', function(e){
+    var tag = (e.target && e.target.tagName || '').toLowerCase();
+    if(tag === 'input' || tag === 'textarea' || (e.target && e.target.isContentEditable)) return;
     var inner = activeInner();
     var atTop = inner.scrollTop <= 0;
     var atBottom = inner.scrollTop + inner.clientHeight >= inner.scrollHeight - 1;
